@@ -9,7 +9,6 @@ import {
 import { useStartupStore } from '../store/useStartupStore';
 import { NotificationPanel } from './NotificationPanel';
 import { useAuth } from '../contexts/AuthContext';
-import { auth } from '../lib/firebase';
 
 interface AppShellProps { children: React.ReactNode; }
 
@@ -267,7 +266,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                 <p className="text-[10px] font-medium mt-0.5" style={{ color:T.teal }}>● Online</p>
               </div>
               <button 
-                onClick={() => logout(auth)} 
+                onClick={() => logout()} 
                 className="text-white/45 hover:text-red-400 transition-colors text-sm ml-1" 
                 title="Sign Out"
               >

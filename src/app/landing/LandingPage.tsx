@@ -31,9 +31,10 @@ const C = {
 // ─────────────────────────────────────────────
 // ANIMATION VARIANTS
 // ─────────────────────────────────────────────
+const EASE = [0.16, 1, 0.3, 1] as const;
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] } }),
+  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: i * 0.12, ease: EASE } }),
 };
 const fadeIn = {
   hidden: { opacity: 0 },
@@ -41,7 +42,7 @@ const fadeIn = {
 };
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.85 },
-  visible: (i = 0) => ({ opacity: 1, scale: 1, transition: { duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] } }),
+  visible: (i = 0) => ({ opacity: 1, scale: 1, transition: { duration: 0.6, delay: i * 0.1, ease: EASE } }),
 };
 
 // ─────────────────────────────────────────────
@@ -69,10 +70,6 @@ const GlassCard: React.FC<GlassCardProps> = ({ children, className = '', glowCol
       <motion.div
         // @ts-expect-error tilt ref
         ref={tiltRef}
-        style={{
-          transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transition: 'transform 0.15s ease',
-        }}
         className={`relative rounded-2xl border border-white/8 backdrop-blur-xl overflow-hidden group ${className}`}
         style={{
           background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
@@ -105,8 +102,8 @@ const GlassCard: React.FC<GlassCardProps> = ({ children, className = '', glowCol
 // ─────────────────────────────────────────────
 // SECTION WRAPPER
 // ─────────────────────────────────────────────
-const Section: React.FC<{ children: React.ReactNode; className?: string; id?: string }> = ({ children, className = '', id }) => (
-  <section id={id} className={`relative w-full ${className}`}>{children}</section>
+const Section: React.FC<{ children: React.ReactNode; className?: string; id?: string; style?: React.CSSProperties }> = ({ children, className = '', id, style }) => (
+  <section id={id} className={`relative w-full ${className}`} style={style}>{children}</section>
 );
 
 // ─────────────────────────────────────────────

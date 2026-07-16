@@ -7,7 +7,7 @@ interface GradientTextProps {
   to?: string;
   animate?: boolean;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
 }
 
 export const GradientText: React.FC<GradientTextProps> = ({
@@ -33,7 +33,6 @@ export const GradientText: React.FC<GradientTextProps> = ({
   };
 
   return (
-    // @ts-expect-error dynamic tag
     <Tag className={className} style={gradientStyle}>
       {children}
     </Tag>
