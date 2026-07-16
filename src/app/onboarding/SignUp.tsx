@@ -85,6 +85,11 @@ export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
     }
   };
 
+  const handleDemoLogin = () => {
+    loginAsDemo();
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center p-6 text-slate-200 relative overflow-hidden font-sans">
       
@@ -318,7 +323,7 @@ export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
           <div className="text-center pt-2 border-t border-white/[0.04] mt-4">
             <button
               type="button"
-              onClick={loginAsDemo}
+              onClick={handleDemoLogin}
               className="text-xs text-[#00C2FF] hover:text-[#00D4AA] hover:underline font-bold transition-colors cursor-pointer"
             >
               Continue in Demo Mode (Local Offline Bypass)
