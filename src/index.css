@@ -104,6 +104,18 @@
   to { --border-angle: 360deg; transform: rotate(360deg); }
 }
 
+/* Landing page gradient shift for GradientText */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+/* Landing page card shine sweep */
+@keyframes shine-sweep {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
 /* Gradient text shimmer */
 @keyframes shimmer {
   from { background-position: -200% center; }
