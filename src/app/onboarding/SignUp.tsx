@@ -11,7 +11,7 @@ interface SignUpProps {
 
 export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
   const navigate = useNavigate();
-  const { signIn, signUp, signInWithGoogle } = useAuth();
+  const { signIn, signUp, signInWithGoogle, loginAsDemo } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -312,6 +312,17 @@ export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
               <span>{isLogin ? "Don't have an account? Sign up" : 'Already have an account? Log in'}</span>
               <span className="group-hover:translate-x-1 transition-transform">➔</span>
             </Link>
+          </div>
+
+          {/* Demo Mode Bypass */}
+          <div className="text-center pt-2 border-t border-white/[0.04] mt-4">
+            <button
+              type="button"
+              onClick={loginAsDemo}
+              className="text-xs text-[#00C2FF] hover:text-[#00D4AA] hover:underline font-bold transition-colors cursor-pointer"
+            >
+              Continue in Demo Mode (Local Offline Bypass)
+            </button>
           </div>
         </form>
       </motion.div>

@@ -17,6 +17,7 @@ interface AuthContextType {
   signUp: typeof createUserWithEmailAndPassword;
   logout: typeof signOut;
   signInWithGoogle: () => Promise<UserCredential>;
+  loginAsDemo: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,6 +29,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
+    }, (error) => {
+      console.warn("Firebase Auth state error:", error);
       setLoading(false);
     });
 
@@ -43,11 +47,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout: typeof signOut = (authInstance) => {
+    if (user?.uid === 'demo-founder-ajith') {
+      setUser(null);
+      return Promise.resolve();
+    }
     return signOut(authInstance);
   };
 
   const signInWithGoogle = () => {
     return signInWithPopup(auth, googleProvider);
+  };
+
+  const loginAsDemo = () => {
+    const mockUser = {
+      uid: 'demo-founder-ajith',
+      email: 'ajith@im-entrepreneur.com',
+      displayName: 'Ajith',
+      emailVerified: true,
+    } as unknown as User;
+    setUser(mockUser);
+    setLoading(false);
   };
 
   const value = {
@@ -56,12 +75,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signIn,
     signUp,
     logout,
-    signInWithGoogle
+    signInWithGoogle,
+    loginAsDemo
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };
