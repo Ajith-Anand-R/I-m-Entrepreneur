@@ -20,7 +20,7 @@ export const ProfileScreen: React.FC = () => {
     <div className="max-w-2xl mx-auto space-y-6">
       {/* Header */}
       <div className="flex items-center space-x-3 border-b border-slate-200 pb-4">
-        <Link to="/" className="p-2 text-slate-500 hover:text-ink-900 rounded-full hover:bg-slate-100 transition">
+        <Link to="/dashboard" className="p-2 text-slate-500 hover:text-ink-900 rounded-full hover:bg-slate-100 transition">
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>

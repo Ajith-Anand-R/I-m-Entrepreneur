@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -337,5 +338,50 @@
     width: 60px;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
     animation: sheen 3.5s linear infinite;
+  }
+
+  /* ── Luxury Theme & Liquid Glass Styles ── */
+  .font-luxury-serif {
+    font-family: 'Bodoni Moda', serif;
+    letter-spacing: -0.01em;
+  }
+  .font-luxury-sans {
+    font-family: 'Jost', sans-serif;
+  }
+  .text-luxury-gold {
+    background: linear-gradient(135deg, #F5D0A9 0%, #A16207 50%, #78350F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .luxury-glass {
+    background: rgba(12, 10, 9, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(223, 186, 115, 0.12);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  }
+  .luxury-glass-light {
+    background: rgba(250, 250, 249, 0.75);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(161, 98, 7, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(161, 98, 7, 0.04);
+  }
+  .luxury-gold-border {
+    border: 1px solid rgba(161, 98, 7, 0.25);
+  }
+  .luxury-gold-border-glow {
+    transition: all 300ms ease;
+  }
+  .luxury-gold-border-glow:hover {
+    border-color: rgba(223, 186, 115, 0.6);
+    box-shadow: 0 0 20px rgba(161, 98, 7, 0.25);
+  }
+  .luxury-glow-accent {
+    box-shadow: 0 0 50px rgba(161, 98, 7, 0.12);
+  }
+  .luxury-gradient-bg {
+    background: radial-gradient(circle at 50% 50%, rgba(28, 25, 23, 0.88) 0%, rgba(12, 10, 9, 0.98) 100%), url('/startup_ecosystem.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
   }
 }

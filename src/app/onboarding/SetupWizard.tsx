@@ -39,7 +39,7 @@ export const SetupWizard: React.FC = () => {
       }
 
       store.recalculateScore();
-      navigate('/');
+      navigate('/dashboard');
     }
   };
 

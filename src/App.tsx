@@ -19,6 +19,7 @@ import { BuilderHome } from './app/builder/BuilderHome';
 import { GeneratorHome } from './app/generator/GeneratorHome';
 import { CommunityFeed } from './app/community/CommunityFeed';
 import { MeetingsList } from './app/meetings/MeetingsList';
+import { LandingPage } from './app/landing/LandingPage';
 
 // Onboarding Pages
 import { Splash } from './app/onboarding/Splash';
@@ -54,7 +55,8 @@ const AnimatedRoutes: React.FC = () => {
         <Route path="/onboarding" element={<PageWrapper><ProtectedRoute><SetupWizard /></ProtectedRoute></PageWrapper>} />
 
         {/* Main Workspace Routes */}
-        <Route path="/" element={<PageWrapper><ProtectedRoute><DashboardHome /></ProtectedRoute></PageWrapper>} />
+        <Route path="/" element={<PageWrapper><LandingPage /></PageWrapper>} />
+        <Route path="/dashboard" element={<PageWrapper><ProtectedRoute><DashboardHome /></ProtectedRoute></PageWrapper>} />
         <Route path="/workspace" element={<PageWrapper><ProtectedRoute><WorkspaceHome /></ProtectedRoute></PageWrapper>} />
         <Route path="/journey" element={<PageWrapper><ProtectedRoute><JourneyHome /></ProtectedRoute></PageWrapper>} />
         <Route path="/journey/level/:id" element={<PageWrapper><ProtectedRoute><LevelDetail /></ProtectedRoute></PageWrapper>} />

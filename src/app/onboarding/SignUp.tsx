@@ -58,7 +58,7 @@ export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
     try {
       if (isLogin) {
         await signIn(auth, email, password);
-        navigate('/');
+        navigate('/dashboard');
       } else {
         await signUp(auth, email, password);
         navigate('/onboarding');
@@ -76,7 +76,7 @@ export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
     setIsLoading(true);
     try {
       await signInWithGoogle();
-      navigate('/');
+      navigate('/dashboard');
     } catch (err: any) {
       console.error('Google Auth error:', err);
       setError(getFriendlyErrorMessage(err.code || err.message));
@@ -87,7 +87,7 @@ export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
 
   const handleDemoLogin = () => {
     loginAsDemo();
-    navigate('/');
+    navigate('/dashboard');
   };
 
   return (

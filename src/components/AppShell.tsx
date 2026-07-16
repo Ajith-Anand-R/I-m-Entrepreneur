@@ -30,7 +30,7 @@ const T = {
 
 const NAV = [
   {
-    to: '/',          label: 'Dashboard', icon: LayoutDashboard,
+    to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard,
     color: T.purple,  bg: 'rgba(108,71,255,0.14)', shadow: '0 6px 20px rgba(108,71,255,0.4)',
     grad:   'linear-gradient(135deg,#6C47FF,#8B5CF6)',
   },
@@ -87,10 +87,10 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [showChat,  setShowChat]  = useState(false);
   const location = useLocation();
 
-  const isAuth = ['/login','/signup','/onboarding','/splash'].some(p => location.pathname.startsWith(p));
+  const isAuth = ['/login','/signup','/onboarding','/splash'].some(p => location.pathname.startsWith(p)) || location.pathname === '/';
   if (isAuth) return <>{children}</>;
 
-  const active = NAV.find(n => n.to==='/' ? location.pathname==='/' : location.pathname.startsWith(n.to)) ?? NAV[0];
+  const active = NAV.find(n => n.to==='/dashboard' ? location.pathname==='/dashboard' : location.pathname.startsWith(n.to)) ?? NAV[0];
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row" style={{ background: '#F4F3FF', fontFamily: "'DM Sans',sans-serif" }}>

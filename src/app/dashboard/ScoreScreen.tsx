@@ -45,7 +45,7 @@ export const ScoreScreen: React.FC = () => {
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header */}
       <div className="flex items-center space-x-3 border-b border-slate-100 pb-4">
-        <Link to="/" className="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-50 transition border border-slate-100">
+        <Link to="/dashboard" className="p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-50 transition border border-slate-100">
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <div>
