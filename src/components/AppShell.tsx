@@ -77,14 +77,13 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const displayName = user?.displayName || (user?.email ? user.email.split('@')[0] : 'Founder');
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row" style={{ background: 'var(--surface-0)', fontFamily: "'DM Sans',sans-serif" }}>
+    <div className="min-h-screen md:h-screen w-full flex flex-col md:flex-row md:p-4 gap-4 md:overflow-hidden relative" style={{ background: 'var(--surface-0)', fontFamily: "'DM Sans',sans-serif" }}>
 
       {/* ════════════════════════════════════════
-          DESKTOP SIDEBAR — Refined Dark
+          DESKTOP SIDEBAR — Floating Dark Glass
       ════════════════════════════════════════ */}
-      <aside className="hidden md:flex md:w-[260px] shrink-0 z-30">
-        <div className="fixed top-0 left-0 w-[260px] h-screen flex flex-col overflow-hidden"
-          style={{ background: '#0F0F1A', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+      <aside className="hidden md:flex w-[260px] shrink-0 flex-col h-full rounded-[24px] bg-[#0F0F1A] border border-white/[0.07] overflow-hidden shadow-xl relative z-30">
+        <div className="w-full h-full flex flex-col overflow-hidden relative">
 
           {/* Subtle ambient orbs */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -126,15 +125,21 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                       <motion.div
                         whileTap={{ scale: 0.96 }}
                         className="relative flex items-center gap-3 px-3 py-2.5 rounded-2xl cursor-pointer overflow-hidden group"
-                        style={{
-                          background: ia ? item.bg : 'transparent',
-                          border: ia ? `1px solid ${item.color}20` : '1px solid transparent',
-                          transition: 'all 200ms ease',
-                        }}
                       >
                         {/* Hover fill */}
                         <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                           style={{ background: 'rgba(255,255,255,0.03)' }} />
+
+                        {/* Shared Active Sliding Pill */}
+                        {ia && (
+                          <motion.div layoutId="active-pill"
+                            className="absolute inset-0 rounded-2xl z-0"
+                            style={{
+                              background: item.bg,
+                              border: `1px solid ${item.color}16`,
+                            }}
+                            transition={{ type: 'spring', stiffness: 380, damping: 30 }} />
+                        )}
 
                         {/* Active glow */}
                         {ia && (
@@ -145,7 +150,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                         )}
 
                         {/* Icon */}
-                        <div className="relative w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200"
+                        <div className="relative w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200 z-10"
                           style={{
                             background: ia ? item.grad : 'rgba(255,255,255,0.05)',
                             boxShadow: ia ? `0 4px 14px ${item.color}40` : 'none',
@@ -159,12 +164,12 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                           {item.label}
                         </span>
 
-                        {/* Active dot */}
+                        {/* Shared Active Sliding Dot */}
                         {ia && (
-                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
-                            transition={{ type: 'spring', stiffness: 300 }}
-                            className="ml-auto w-1.5 h-1.5 rounded-full shrink-0"
-                            style={{ background: item.color, boxShadow: `0 0 8px ${item.color}` }} />
+                          <motion.div layoutId="active-dot"
+                            className="ml-auto w-1.5 h-1.5 rounded-full shrink-0 relative z-10"
+                            style={{ background: item.color, boxShadow: `0 0 8px ${item.color}` }}
+                            transition={{ type: 'spring', stiffness: 350, damping: 26 }} />
                         )}
 
                         {/* NEW badge */}
@@ -245,9 +250,9 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
       </aside>
 
       {/* ════════════════════════════════════════
-          MAIN CONTENT
+          MAIN CONTENT — Floating Light Canvas
       ════════════════════════════════════════ */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 md:rounded-[24px] md:border md:border-accent/[0.08] md:shadow-md bg-white overflow-hidden relative z-10">
 
         {/* ── Top bar — Frosted Glass ── */}
         <header className="sticky top-0 z-20 flex items-center justify-between h-[56px] px-5 md:px-8"
@@ -302,7 +307,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 px-4 py-6 md:px-8 md:py-8 pb-28 md:pb-8">
+        <main className="flex-1 px-4 py-6 md:px-8 md:py-8 pb-28 md:pb-8 overflow-y-auto">
           {children}
         </main>
       </div>
@@ -335,16 +340,15 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                     className="relative flex flex-col items-center px-3 py-1.5 cursor-pointer">
 
                     {/* Icon container */}
-                    <div className="relative w-10 h-9 flex items-center justify-center rounded-xl transition-all duration-250"
-                      style={{
-                        background: ia ? item.bg : 'transparent',
-                        border: ia ? `1px solid ${item.color}18` : '1px solid transparent',
-                      }}>
+                    <div className="relative w-10 h-9 flex items-center justify-center rounded-xl transition-all duration-250">
                       {ia && (
-                        <motion.div layoutId="mob-pill" initial={false}
-                          transition={{ type: 'spring', stiffness: 400, damping: 36 }}
-                          className="absolute inset-0 rounded-xl"
-                          style={{ background: `radial-gradient(circle, ${item.color}15, transparent 70%)` }} />
+                        <motion.div layoutId="mob-pill-bg"
+                          className="absolute inset-0 rounded-xl border z-0"
+                          style={{
+                            background: item.bg,
+                            borderColor: `${item.color}18`,
+                          }}
+                          transition={{ type: 'spring', stiffness: 380, damping: 28 }} />
                       )}
                       <Icon className="w-[17px] h-[17px] relative z-10 transition-colors duration-200"
                         style={{ color: ia ? item.color : '#9CA3C0' }} />
@@ -358,10 +362,10 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
 
                     {/* Active dot */}
                     {ia && (
-                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
-                        transition={{ type: 'spring', stiffness: 320 }}
-                        className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
-                        style={{ background: item.color }} />
+                      <motion.div layoutId="mob-dot"
+                        transition={{ type: 'spring', stiffness: 320, damping: 24 }}
+                        className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full z-10"
+                        style={{ background: item.color, boxShadow: `0 0 4px ${item.color}` }} />
                     )}
                   </motion.div>
                 )}

@@ -38,10 +38,44 @@ export interface BookSubmission {
   submittedAt: string;
 }
 
+// ── Identity Discovery Tables ──────────────────────────────
+
+export interface IdentityResponseRecord {
+  id: string;
+  chapter: 'personality' | 'values' | 'passions' | 'skills' | 'lifeStory' | 'problems';
+  questionId: string;
+  question: string;
+  answer: string;
+  aiReflection?: string;
+  answeredAt: number;
+}
+
+export interface HunchBookRecord {
+  id: string;
+  type: 'text' | 'voice' | 'photo' | 'sketch';
+  content: string;
+  imageUrl?: string;
+  tags: string[];
+  aiTheme?: string;
+  createdAt: number;
+}
+
+export interface ProblemLibraryRecord {
+  id: string;
+  domain: string;
+  description: string;
+  passionScore: number;
+  relatedPassions: string[];
+  createdAt: number;
+}
+
 class StartupDB extends Dexie {
   documents!: Table<DocumentRecord>;
   chats!: Table<ChatMessage>;
   submissions!: Table<BookSubmission>;
+  identityResponses!: Table<IdentityResponseRecord>;
+  hunchBookEntries!: Table<HunchBookRecord>;
+  problemLibrary!: Table<ProblemLibraryRecord>;
 
   constructor() {
     super('StartupDB');
@@ -49,6 +83,15 @@ class StartupDB extends Dexie {
       documents: 'id, category, analyzedAt',
       chats: 'id, mentorId, timestamp',
       submissions: 'levelId, status',
+    });
+    // v2: Identity Discovery tables
+    this.version(2).stores({
+      documents: 'id, category, analyzedAt',
+      chats: 'id, mentorId, timestamp',
+      submissions: 'levelId, status',
+      identityResponses: 'id, chapter, questionId, answeredAt',
+      hunchBookEntries: 'id, aiTheme, createdAt',
+      problemLibrary: 'id, domain, passionScore, createdAt',
     });
   }
 }

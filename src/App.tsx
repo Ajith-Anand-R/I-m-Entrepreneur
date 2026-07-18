@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AppShell } from './components/AppShell';
 
@@ -25,6 +25,14 @@ import { LandingPage } from './app/landing/LandingPage';
 import { Splash } from './app/onboarding/Splash';
 import { SignUp } from './app/onboarding/SignUp';
 import { SetupWizard } from './app/onboarding/SetupWizard';
+
+// Discovery Flow (Identity Discovery Engine) - forced refresh
+import { InspirationScreen } from './app/discovery/InspirationScreen';
+import { DiscoveryFlow } from './app/discovery/DiscoveryFlow';
+import { ProblemDiscovery } from './app/discovery/ProblemDiscovery';
+import { ProfileReveal } from './app/discovery/ProfileReveal';
+import { RoadmapPreview } from './app/discovery/RoadmapPreview';
+import { HunchBook } from './app/hunchbook/HunchBook';
 
 // Auth Imports
 import { AuthProvider } from './contexts/AuthContext';
@@ -52,7 +60,15 @@ const AnimatedRoutes: React.FC = () => {
         <Route path="/splash" element={<PageWrapper><Splash /></PageWrapper>} />
         <Route path="/login" element={<PageWrapper><SignUp isLogin={true} /></PageWrapper>} />
         <Route path="/signup" element={<PageWrapper><SignUp isLogin={false} /></PageWrapper>} />
-        <Route path="/onboarding" element={<PageWrapper><ProtectedRoute><SetupWizard /></ProtectedRoute></PageWrapper>} />
+        <Route path="/onboarding" element={<PageWrapper><ProtectedRoute><InspirationScreen /></ProtectedRoute></PageWrapper>} />
+        <Route path="/setup" element={<PageWrapper><ProtectedRoute><SetupWizard /></ProtectedRoute></PageWrapper>} />
+
+        {/* Identity Discovery Flow */}
+        <Route path="/discover/inspiration" element={<PageWrapper><ProtectedRoute><InspirationScreen /></ProtectedRoute></PageWrapper>} />
+        <Route path="/discover/identity" element={<PageWrapper><ProtectedRoute><DiscoveryFlow /></ProtectedRoute></PageWrapper>} />
+        <Route path="/discover/problems" element={<PageWrapper><ProtectedRoute><ProblemDiscovery /></ProtectedRoute></PageWrapper>} />
+        <Route path="/discover/profile" element={<PageWrapper><ProtectedRoute><ProfileReveal /></ProtectedRoute></PageWrapper>} />
+        <Route path="/discover/roadmap" element={<PageWrapper><ProtectedRoute><RoadmapPreview /></ProtectedRoute></PageWrapper>} />
 
         {/* Main Workspace Routes */}
         <Route path="/" element={<PageWrapper><LandingPage /></PageWrapper>} />
@@ -73,6 +89,7 @@ const AnimatedRoutes: React.FC = () => {
         <Route path="/generator" element={<PageWrapper><ProtectedRoute><GeneratorHome /></ProtectedRoute></PageWrapper>} />
         <Route path="/community" element={<PageWrapper><ProtectedRoute><CommunityFeed /></ProtectedRoute></PageWrapper>} />
         <Route path="/meetings" element={<PageWrapper><ProtectedRoute><MeetingsList /></ProtectedRoute></PageWrapper>} />
+        <Route path="/hunchbook" element={<PageWrapper><ProtectedRoute><HunchBook /></ProtectedRoute></PageWrapper>} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
