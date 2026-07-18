@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'; // Trivial refresh comment
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, Fingerprint, Target, Zap, TrendingUp, Heart, Shield, Star } from 'lucide-react';
+import { ArrowRight, Sparkles, Fingerprint, Target, Zap, TrendingUp, Heart, Star } from 'lucide-react';
 import { useIdentityStore, type EntrepreneurProfile } from '../../store/useIdentityStore';
 import { generateEntrepreneurProfile } from '../../lib/fake-identity';
 

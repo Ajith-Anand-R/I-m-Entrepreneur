@@ -286,35 +286,44 @@ const HeroSection: React.FC = () => {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 mb-8 backdrop-blur-sm"
             style={{ background: 'rgba(108,71,255,0.12)' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-xs font-medium text-white/70">AI-Powered Startup OS · Beyond Guidance</span>
+            <span className="text-xs font-medium text-white/70">AI-Powered Founder Development Platform · Beyond Guidance</span>
           </div>
         </motion.div>
 
         {/* Main Heading */}
         <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-heading tracking-tight leading-[1.05] mb-6 text-white">
-          Build Your Startup.<br />
+          Discover Who You Are.<br />
           <GradientText from={C.purple} via="#C026D3" to={C.pink} animate className="block">
-            With AI That Knows You.
+            Then Build What You Were Born to Create.
           </GradientText>
         </motion.h1>
 
-        {/* Sub */}
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }}
-          className="text-lg md:text-xl text-white/50 max-w-2xl leading-relaxed mb-10">
-          One workspace. 10 AI mentors. 15 guided levels. Everything a founder needs — from first idea to first funding — in a single beautiful app.
-        </motion.p>
+        {/* Philosophy Sub */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }}
+          className="max-w-2xl mb-4">
+          <p className="text-lg md:text-xl text-white/50 leading-relaxed">
+            Most platforms start with{' '}
+            <span className="line-through text-white/25">"Build your startup."</span>
+          </p>
+          <p className="text-lg md:text-xl font-semibold leading-relaxed mt-1" style={{ color: C.cyan }}>
+            We start with{' '}<span className="text-white">"Discover yourself first."</span>
+          </p>
+          <p className="text-base text-white/40 leading-relaxed mt-3">
+            An AI-powered Founder Development Platform that begins with identity and ends with impact.
+          </p>
+        </motion.div>
 
         {/* CTA Buttons */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65, duration: 0.6 }}
-          className="flex flex-col sm:flex-row items-center gap-4 mb-12">
+          className="flex flex-col sm:flex-row items-center gap-4 mb-12 mt-8">
           <Link to="/signup">
             <motion.button whileHover={{ scale: 1.04, boxShadow: '0 8px 40px rgba(108,71,255,0.6)' }} whileTap={{ scale: 0.97 }}
               className="relative px-8 py-4 rounded-2xl text-base font-semibold text-white overflow-hidden group"
               style={{ background: 'linear-gradient(135deg, #6C47FF, #F40076)', boxShadow: '0 4px 30px rgba(108,71,255,0.4)' }}>
               <span className="relative z-10 flex items-center gap-2">
-                <Rocket size={18} />
-                Start Building Free
+                <Sparkles size={18} />
+                Begin Your Discovery
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
               </span>
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -345,10 +354,10 @@ const HeroSection: React.FC = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.6 }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-4">
           {[
-            { value: 10, label: 'AI Mentors', suffix: '+', color: C.purple },
-            { value: 15, label: 'Journey Levels', suffix: '', color: C.cyan },
-            { value: 12, label: 'Doc Templates', suffix: '', color: C.pink },
-            { value: 100, label: 'Offline Ready', suffix: '%', color: C.teal },
+            { value: 12, label: 'Discovery Phases', suffix: '', color: C.purple },
+            { value: 5,  label: 'Identity Pillars', suffix: '', color: C.cyan },
+            { value: 15, label: 'Journey Levels', suffix: '', color: C.pink },
+            { value: 10, label: 'AI Mentors', suffix: '+', color: C.teal },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-3xl sm:text-4xl font-bold font-heading text-white">
@@ -391,96 +400,380 @@ const HeroSection: React.FC = () => {
 };
 
 // ─────────────────────────────────────────────
-// APP SHOWCASE SECTION
+// PHILOSOPHY SECTION
 // ─────────────────────────────────────────────
-const ShowcaseSection: React.FC = () => {
-  const { ref: revealRef, isVisible } = useScrollReveal({ threshold: 0.15 });
+const PhilosophySection: React.FC = () => {
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.15 });
 
   return (
-    <Section className="py-24 md:py-36 overflow-hidden" style={{ background: `linear-gradient(180deg, ${C.dark} 0%, ${C.dark2} 50%, ${C.dark} 100%)` }}>
+    <Section className="py-24 md:py-36 overflow-hidden"
+      style={{ background: `linear-gradient(180deg, ${C.dark} 0%, ${C.dark2} 60%, ${C.dark} 100%)` }}>
       <div className="max-w-7xl mx-auto px-6">
-        {/* Label */}
-        <motion.div ref={revealRef as React.RefObject<HTMLDivElement>}
+        <motion.div ref={ref as React.RefObject<HTMLDivElement>}
           initial="hidden" animate={isVisible ? 'visible' : 'hidden'} variants={fadeUp}
           className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/30 mb-4"
-            style={{ background: 'rgba(108,71,255,0.1)' }}>
-            <Sparkles size={13} className="text-purple-400" />
-            <span className="text-xs font-medium text-purple-300">The Complete Startup OS</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/30 mb-5"
+            style={{ background: 'rgba(0,194,255,0.1)' }}>
+            <Brain size={13} className="text-cyan-400" />
+            <span className="text-xs font-medium text-cyan-300">A Different Philosophy</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-white leading-tight">
-            Everything in<br />
-            <GradientText from={C.cyan} to={C.purple}>one beautiful workspace.</GradientText>
+            Today's platforms teach entrepreneurship.<br />
+            <GradientText from={C.cyan} to={C.purple}>
+              Ours helps you discover who you are first.
+            </GradientText>
           </h2>
         </motion.div>
 
-        {/* Main showcase */}
-        <div className="relative flex flex-col lg:flex-row items-center gap-12">
-          {/* App image with glow */}
-          <motion.div initial={{ opacity: 0, x: -60 }} animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -60 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="flex-1 relative">
-            <div className="relative rounded-3xl overflow-hidden" style={{ boxShadow: `0 40px 120px rgba(108,71,255,0.3), 0 0 0 1px rgba(255,255,255,0.08)` }}>
-              <img src="/landing/app_showcase.png" alt="App showcase" className="w-full object-cover" style={{ maxHeight: '600px', objectFit: 'cover' }} />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, transparent 60%, rgba(10,10,15,0.6) 100%)' }} />
+        {/* Comparison */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {/* Others */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }} animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+            transition={{ duration: 0.8, ease: EASE }}
+            className="p-8 rounded-3xl border border-white/6"
+            style={{ background: 'rgba(255,255,255,0.03)' }}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg bg-red-500/15">❌</div>
+              <div className="text-white/50 font-semibold text-sm uppercase tracking-widest">Other Platforms</div>
             </div>
-            {/* Floating badge cards */}
-            <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -top-4 -right-4 md:-right-8 rounded-xl p-3 border border-white/10"
-              style={{ background: 'rgba(18,18,28,0.9)', backdropFilter: 'blur(16px)' }}>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(108,71,255,0.2)' }}>
-                  <Brain size={16} className="text-purple-400" />
+            <div className="space-y-4">
+              {[
+                '"What is your startup idea?"',
+                '"Pick a business model."',
+                '"Define your market."',
+                '"Write your pitch deck."',
+              ].map((q) => (
+                <div key={q} className="flex items-start gap-3 p-3 rounded-xl border border-white/5"
+                  style={{ background: 'rgba(255,50,50,0.05)' }}>
+                  <span className="text-red-400/60 text-lg leading-none mt-0.5">—</span>
+                  <span className="text-white/35 text-sm italic">{q}</span>
                 </div>
-                <div>
-                  <div className="text-white text-xs font-semibold">AI Mentor Online</div>
-                  <div className="text-white/40 text-[10px]">Ready to help</div>
-                </div>
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              </div>
-            </motion.div>
-
-            <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-              className="absolute -bottom-4 -left-4 md:-left-8 rounded-xl p-3 border border-white/10"
-              style={{ background: 'rgba(18,18,28,0.9)', backdropFilter: 'blur(16px)' }}>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(0,212,170,0.2)' }}>
-                  <TrendingUp size={16} className="text-teal-400" />
-                </div>
-                <div>
-                  <div className="text-white text-xs font-semibold">Startup Score</div>
-                  <div className="text-teal-400 text-[10px] font-mono">78/100 ↑ 12pts</div>
-                </div>
-              </div>
-            </motion.div>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Feature list */}
-          <motion.div initial={{ opacity: 0, x: 60 }} animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 60 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-            className="flex-1 space-y-5">
-            {[
-              { icon: <Database size={20} />, color: C.purple, title: 'Startup Workspace', desc: 'Your complete startup database — profile, team, documents, funding readiness, all in one place.' },
-              { icon: <Brain size={20} />, color: C.cyan, title: 'AI Mentor Chat', desc: '10 specialist AI mentors that know your specific startup. They read your documents and answer accordingly.' },
-              { icon: <BookOpen size={20} />, color: C.amber, title: 'Learning Academy', desc: '22 modules of structured entrepreneurship education. Videos, notes, quizzes, activities.' },
-              { icon: <Layers size={20} />, color: C.pink, title: 'Founder Journey', desc: 'A 15-level gated progression from Vision to Scale. Each level unlocks when the AI validates your work.' },
-              { icon: <FileText size={20} />, color: C.teal, title: 'Document Generator', desc: '12 AI-powered templates — Pitch Deck, Business Plan, Lean Canvas, SWOT, and more.' },
-            ].map((item, i) => (
-              <motion.div key={item.title} initial={{ opacity: 0, x: 30 }} animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-                transition={{ delay: 0.2 + i * 0.1, duration: 0.6 }}
-                className="flex gap-4 p-4 rounded-xl border border-white/6 hover:border-white/12 transition-colors group"
-                style={{ background: 'rgba(255,255,255,0.03)' }}>
-                <div className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center"
-                  style={{ background: `${item.color}20`, color: item.color }}>
-                  {item.icon}
-                </div>
-                <div>
-                  <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
-                  <div className="text-white/45 text-xs leading-relaxed">{item.desc}</div>
-                </div>
-              </motion.div>
-            ))}
+          {/* Us */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }} animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+            transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
+            className="p-8 rounded-3xl border border-purple-500/25 relative overflow-hidden"
+            style={{ background: 'rgba(108,71,255,0.08)' }}>
+            {/* Glow */}
+            <div className="absolute inset-0 rounded-3xl pointer-events-none"
+              style={{ background: 'radial-gradient(circle at 50% 0%, rgba(108,71,255,0.18) 0%, transparent 70%)' }} />
+            <div className="flex items-center gap-3 mb-6 relative">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg"
+                style={{ background: 'rgba(108,71,255,0.25)' }}>✨</div>
+              <div className="font-bold text-sm uppercase tracking-widest"
+                style={{ color: C.purple }}>I'm Entrepreneur</div>
+            </div>
+            <div className="space-y-4 relative">
+              {[
+                '"Who are you? What do you love?"',
+                '"What problems were you born to solve?"',
+                '"What skills make you unique?"',
+                '"What impact do you want to create?"',
+              ].map((q, i) => (
+                <motion.div key={q}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                  className="flex items-start gap-3 p-3 rounded-xl border border-purple-500/20"
+                  style={{ background: 'rgba(108,71,255,0.1)' }}>
+                  <span className="text-purple-400 text-lg leading-none mt-0.5">◈</span>
+                  <span className="text-white/80 text-sm font-medium">{q}</span>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
+        </div>
+
+        {/* Quote */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: 0.6 }}
+          className="text-center mt-14">
+          <p className="text-white/30 text-base max-w-2xl mx-auto leading-relaxed">
+            Every successful entrepreneur first discovers{' '}
+            <span className="text-white/60 font-semibold">who they are, what they love, what they are good at,
+            what problems they care about,</span>{' '}and what impact they want to create.
+            Only then should they start building a startup.
+          </p>
+        </motion.div>
+      </div>
+    </Section>
+  );
+};
+
+// ─────────────────────────────────────────────
+// FIVE QUESTIONS SECTION
+// ─────────────────────────────────────────────
+const FiveQuestionsSection: React.FC = () => {
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.1 });
+  const [activeQ, setActiveQ] = useState(0);
+
+  const questions = [
+    {
+      num: '01', emoji: '🧠', color: C.purple,
+      question: 'Who am I?',
+      detail: 'Personality, working style, how you solve problems, your risk tolerance, and your natural strengths as a leader and builder.',
+    },
+    {
+      num: '02', emoji: '❤️', color: C.pink,
+      question: 'What do I love?',
+      detail: 'Industries that excite you, problems that keep you up at night, and the intersection of passion and purpose that drives lasting motivation.',
+    },
+    {
+      num: '03', emoji: '⚡', color: C.amber,
+      question: 'What am I good at?',
+      detail: 'Your real skills — programming, communication, design, sales, research, leadership. The raw materials your startup will be built from.',
+    },
+    {
+      num: '04', emoji: '🔍', color: C.cyan,
+      question: 'What problems do I care about?',
+      detail: 'Real problems around you — in your college, your family, your community. Entrepreneurs solve problems they genuinely care about.',
+    },
+    {
+      num: '05', emoji: '🌍', color: C.teal,
+      question: 'What impact do I want to create?',
+      detail: 'The change you want to see in the world. Your mission as a founder. The reason you will keep going when it gets hard.',
+    },
+  ];
+
+  return (
+    <Section className="py-24 md:py-36 overflow-hidden" style={{ background: C.dark3 }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div ref={ref as React.RefObject<HTMLDivElement>}
+          initial="hidden" animate={isVisible ? 'visible' : 'hidden'} variants={fadeUp}
+          className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 mb-5"
+            style={{ background: 'rgba(255,170,0,0.1)' }}>
+            <Sparkles size={13} className="text-amber-400" />
+            <span className="text-xs font-medium text-amber-300">Identity Discovery Engine</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold font-heading text-white mb-4">
+            Five questions every founder must answer
+            <br /><GradientText from={C.amber} to={C.pink}>before building anything.</GradientText>
+          </h2>
+          <p className="text-white/35 text-base max-w-xl mx-auto">
+            Our AI guides you through each one — with reflection exercises, personality mapping, and deep discovery sessions.
+          </p>
+        </motion.div>
+
+        {/* Questions grid */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          {questions.map((q, i) => (
+            <motion.button key={q.num}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ delay: 0.1 + i * 0.1, duration: 0.6 }}
+              onClick={() => setActiveQ(i)}
+              className={`text-left p-6 rounded-2xl border transition-all duration-300 group ${
+                activeQ === i
+                  ? 'border-white/20 scale-[1.02]'
+                  : 'border-white/6 hover:border-white/12'
+              }`}
+              style={{
+                background: activeQ === i
+                  ? `linear-gradient(135deg, ${q.color}20, ${q.color}08)`
+                  : 'rgba(255,255,255,0.02)',
+                boxShadow: activeQ === i ? `0 8px 40px ${q.color}25` : 'none',
+              }}>
+              <div className="text-3xl mb-4">{q.emoji}</div>
+              <div className="font-mono text-xs mb-2" style={{ color: q.color + 'aa' }}>{q.num}</div>
+              <h3 className="text-white font-bold text-base mb-3 leading-tight">{q.question}</h3>
+              <div className={`text-xs leading-relaxed transition-all duration-300 ${
+                activeQ === i ? 'text-white/55 max-h-40' : 'text-white/0 max-h-0 overflow-hidden'
+              }`}>
+                {q.detail}
+              </div>
+              <div className="mt-3 h-0.5 rounded-full transition-all duration-300"
+                style={{ background: activeQ === i ? q.color : 'rgba(255,255,255,0.08)', width: activeQ === i ? '100%' : '30%' }} />
+            </motion.button>
+          ))}
+        </div>
+
+        {/* Active question expanded detail (mobile-friendly) */}
+        <motion.div
+          key={activeQ}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-8 p-6 rounded-2xl border border-white/8 md:hidden"
+          style={{ background: 'rgba(255,255,255,0.03)' }}>
+          <p className="text-white/55 text-sm leading-relaxed">{questions[activeQ].detail}</p>
+        </motion.div>
+
+        {/* Bottom quote */}
+        <motion.div
+          initial={{ opacity: 0 }} animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ delay: 0.8 }}
+          className="text-center mt-14 p-8 rounded-3xl border border-white/6"
+          style={{ background: 'rgba(108,71,255,0.06)' }}>
+          <p className="text-lg md:text-xl font-semibold text-white/80 leading-relaxed max-w-2xl mx-auto">
+            "Only after answering these questions should someone start building a startup."
+          </p>
+          <p className="text-white/30 text-sm mt-3 font-mono">— I'm Entrepreneur Philosophy</p>
+        </motion.div>
+      </div>
+    </Section>
+  );
+};
+
+// ─────────────────────────────────────────────
+// 12-PHASE JOURNEY SECTION
+// ─────────────────────────────────────────────
+const TwelvePhaseSection: React.FC = () => {
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.05 });
+  const [activePhase, setActivePhase] = useState(0);
+
+  const chapters = [
+    {
+      id: 'know-yourself',
+      label: 'Chapter 1',
+      title: 'Know Yourself',
+      color: C.purple,
+      phases: [
+        { n: 1, icon: '🎬', title: 'Inspiration & Vision', desc: 'An immersive experience with founder stories, innovation documentaries, and thought-provoking content to emotionally connect you with entrepreneurship.' },
+        { n: 2, icon: '🧠', title: 'Personality & Working Style', desc: 'Discover how you solve problems, lead people, handle uncertainty, and approach building. Your natural entrepreneur archetype revealed.' },
+        { n: 3, icon: '💎', title: 'Values Discovery', desc: 'Explore what matters most — innovation, impact, freedom, creativity, or recognition. Your values guide every future decision.' },
+      ],
+    },
+    {
+      id: 'find-your-problem',
+      label: 'Chapter 2',
+      title: 'Find Your Problem',
+      color: C.cyan,
+      phases: [
+        { n: 4, icon: '❤️', title: 'Passion Discovery', desc: 'Explore industries that excite you — AI, healthcare, education, sustainability, gaming. Where your energy meets the world.' },
+        { n: 5, icon: '⚡', title: 'Skills Discovery', desc: 'Map your real strengths: programming, design, sales, leadership, research. Upload certificates and portfolios to build your skill profile.' },
+        { n: 6, icon: '🔍', title: 'Problem Discovery', desc: 'Identify real problems around you — in your college, family, community. Build your personal Problem Library powered by AI observation.' },
+      ],
+    },
+    {
+      id: 'build-your-startup',
+      label: 'Chapter 3',
+      title: 'Build Your Startup',
+      color: C.amber,
+      phases: [
+        { n: 7, icon: '📔', title: 'Idea Vault (HunchBook)', desc: 'Capture random ideas, voice notes, sketches, and concepts. AI analyzes patterns over time to reveal your entrepreneurial focus.' },
+        { n: 8, icon: '🪪', title: 'Your Entrepreneur Profile', desc: 'AI synthesizes everything — personality, values, skills, problems, ideas — into your unique Founder Identity. Not a label. A launchpad.' },
+        { n: 9, icon: '🗺️', title: 'Personalized Roadmap', desc: 'A custom step-by-step startup journey built specifically for your profile. Healthcare innovator? Tech builder? Social entrepreneur? Your path is unique.' },
+      ],
+    },
+    {
+      id: 'launch-and-scale',
+      label: 'Chapter 4',
+      title: 'Launch & Scale',
+      color: C.pink,
+      phases: [
+        { n: 10, icon: '🏠', title: 'I\'M Dashboard', desc: 'Your home base — profile, vision, goals, skills, progress, daily tasks, learning, and startup readiness. All in one living dashboard.' },
+        { n: 11, icon: '🎓', title: 'Learning Academy', desc: '22 modules from idea to IPO: Lean Startup, Design Thinking, Market Research, Business Models, Fundraising, Legal, and more.' },
+        { n: 12, icon: '🚀', title: 'Startup Workspace + AI Tools', desc: 'Your dedicated startup HQ. Generate DPR, Business Plan, Pitch Deck, Financial Projections, Lean Canvas — all AI-powered, all in one place.' },
+      ],
+    },
+  ];
+
+  const allPhases = chapters.flatMap(c => c.phases.map(p => ({ ...p, chapterColor: c.color, chapterTitle: c.title })));
+
+  return (
+    <Section className="py-24 md:py-36 overflow-hidden"
+      style={{ background: `linear-gradient(180deg, ${C.dark} 0%, ${C.dark3} 100%)` }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div ref={ref as React.RefObject<HTMLDivElement>}
+          initial="hidden" animate={isVisible ? 'visible' : 'hidden'} variants={fadeUp}
+          className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-pink-500/30 mb-5"
+            style={{ background: 'rgba(244,0,118,0.1)' }}>
+            <Rocket size={13} className="text-pink-400" />
+            <span className="text-xs font-medium text-pink-300">From Identity to Impact</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold font-heading text-white mb-4">
+            12 phases. One complete journey.
+            <br /><GradientText from={C.purple} to={C.pink}>From self-discovery to startup launch.</GradientText>
+          </h2>
+          <p className="text-white/35 text-base max-w-xl mx-auto">
+            Every phase builds on the last. You cannot skip ahead.
+            The AI unlocks each step only when you're genuinely ready.
+          </p>
+        </motion.div>
+
+        {/* Chapter tabs */}
+        <div className="flex flex-wrap gap-3 justify-center mb-12">
+          {chapters.map((ch, i) => (
+            <motion.button key={ch.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ delay: i * 0.08 }}
+              onClick={() => setActivePhase(i * 3)}
+              className="px-5 py-2.5 rounded-full text-xs font-semibold border transition-all duration-300"
+              style={{
+                background: Math.floor(activePhase / 3) === i ? `${ch.color}25` : 'rgba(255,255,255,0.04)',
+                borderColor: Math.floor(activePhase / 3) === i ? `${ch.color}60` : 'rgba(255,255,255,0.08)',
+                color: Math.floor(activePhase / 3) === i ? ch.color : 'rgba(255,255,255,0.4)',
+              }}>
+              {ch.label} — {ch.title}
+            </motion.button>
+          ))}
+        </div>
+
+        {/* Phases grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-10">
+          {allPhases.map((phase, i) => (
+            <motion.div key={phase.n}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.05 + i * 0.06 }}
+              onClick={() => setActivePhase(i)}
+              className={`p-5 rounded-2xl border cursor-pointer transition-all duration-300 ${
+                activePhase === i ? 'border-white/20 scale-[1.02]' : 'border-white/6 hover:border-white/12'
+              }`}
+              style={{
+                background: activePhase === i
+                  ? `linear-gradient(135deg, ${phase.chapterColor}15, ${phase.chapterColor}05)`
+                  : 'rgba(255,255,255,0.02)',
+                boxShadow: activePhase === i ? `0 8px 40px ${phase.chapterColor}20` : 'none',
+              }}>
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl"
+                  style={{ background: `${phase.chapterColor}18` }}>
+                  {phase.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-mono text-[10px] font-bold"
+                      style={{ color: phase.chapterColor + 'aa' }}>PHASE {String(phase.n).padStart(2, '0')}</span>
+                    <span className="text-[10px] text-white/20">·</span>
+                    <span className="text-[10px] text-white/25 truncate">{phase.chapterTitle}</span>
+                  </div>
+                  <h3 className="text-white font-semibold text-sm mb-2">{phase.title}</h3>
+                  <p className="text-white/40 text-xs leading-relaxed">{phase.desc}</p>
+                </div>
+              </div>
+              {/* Progress bar */}
+              <div className="mt-4 h-0.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                <motion.div className="h-full rounded-full"
+                  animate={{ width: activePhase === i ? '100%' : `${(phase.n / 12) * 100}%` }}
+                  style={{ background: phase.chapterColor }} />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center">
+          <Link to="/signup">
+            <motion.button
+              whileHover={{ scale: 1.04, boxShadow: '0 8px 40px rgba(108,71,255,0.5)' }}
+              whileTap={{ scale: 0.97 }}
+              className="px-8 py-4 rounded-2xl text-base font-semibold text-white inline-flex items-center gap-2"
+              style={{ background: 'linear-gradient(135deg, #6C47FF, #F40076)', boxShadow: '0 4px 24px rgba(108,71,255,0.35)' }}>
+              <Sparkles size={18} />
+              Start Phase 1 — Free
+              <ArrowRight size={16} />
+            </motion.button>
+          </Link>
+          <p className="text-white/25 text-xs mt-4">No credit card · Works offline · Install on any device</p>
         </div>
       </div>
     </Section>
@@ -495,28 +788,28 @@ const PillarsSection: React.FC = () => {
 
   const pillars = [
     {
-      icon: <Database size={28} />, color: C.purple, title: 'Startup Workspace',
-      desc: 'Your startup\'s complete digital headquarters. Profile, team, documents, knowledge base — organized and accessible.',
+      icon: <Brain size={28} />, color: C.purple, title: 'Identity Engine',
+      desc: 'The heart of I\'m Entrepreneur. AI-guided discovery of your personality, values, passions, and skills before you build a single slide.',
       size: 'lg', img: '/landing/features_bg.png',
-      tags: ['Profile', 'Documents', 'Team', 'Knowledge Base'],
+      tags: ['Personality', 'Values', 'Skills', 'Life Story'],
     },
     {
-      icon: <Brain size={28} />, color: C.cyan, title: 'AI Mentor',
-      desc: 'Not a generic chatbot. 10 specialist mentors that read your actual uploaded documents and give startup-specific advice.',
+      icon: <Sparkles size={28} />, color: C.cyan, title: 'AI Mentor',
+      desc: 'Not a generic chatbot. Your AI mentor knows your identity profile and gives startup advice tailored specifically to who you are.',
       size: 'md',
-      tags: ['Context-Aware', '10 Specialists', 'Real Answers'],
+      tags: ['Context-Aware', '10 Specialists', 'Profile-Linked'],
     },
     {
       icon: <BookOpen size={28} />, color: C.amber, title: 'Learning Academy',
-      desc: '22 curriculum modules from idea to scaling, with videos, notes, quizzes, and assignments.',
+      desc: '22 curriculum modules built on your roadmap — from Lean Startup to Fundraising. Learn what matters for YOUR founder archetype.',
       size: 'md',
-      tags: ['22 Modules', 'Videos', 'Quizzes', 'Certificates'],
+      tags: ['22 Modules', 'Personalized', 'Quizzes', 'Certificates'],
     },
     {
-      icon: <Rocket size={28} />, color: C.pink, title: 'Founder Journey',
-      desc: 'A physical + digital book with a 15-level AI-gated progression. Your startup ritual.',
+      icon: <Rocket size={28} />, color: C.pink, title: 'Startup Workspace',
+      desc: 'Once your identity is clear, build with confidence. Vision, team, documents, pitch deck, financials — your startup HQ.',
       size: 'lg', img: '/landing/journey_visual.png',
-      tags: ['15 Levels', 'AI Review', 'Physical Book', 'Unlock System'],
+      tags: ['Workspace', 'AI Tools', 'Pitch Deck', 'Funding'],
     },
   ];
 
@@ -529,14 +822,14 @@ const PillarsSection: React.FC = () => {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-pink-500/30 mb-4"
             style={{ background: 'rgba(244,0,118,0.1)' }}>
             <Layers size={13} className="text-pink-400" />
-            <span className="text-xs font-medium text-pink-300">Four Core Pillars</span>
+            <span className="text-xs font-medium text-pink-300">Four Integrated Pillars</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold font-heading text-white">
-            Built on what founders<br />
-            <GradientText from={C.purple} to={C.pink}>actually need.</GradientText>
+            Identity first. Then everything<br />
+            <GradientText from={C.purple} to={C.pink}>a founder actually needs.</GradientText>
           </h2>
           <p className="text-white/40 text-lg max-w-xl mx-auto mt-4">
-            Not a Notion template. Not a YouTube playlist. A true operating system for your startup, with AI woven through every layer.
+            Not a generic startup tool. An AI-powered system that starts with who you are and builds everything else around your unique identity.
           </p>
         </motion.div>
 
@@ -1196,30 +1489,33 @@ const CTASection: React.FC<{ user: any }> = ({ user }) => {
           <motion.div variants={fadeUp} className="relative">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/30 mb-6"
               style={{ background: 'rgba(108,71,255,0.12)' }}>
-              <Rocket size={13} className="text-purple-400" />
-              <span className="text-xs font-medium text-purple-300">Start Your Journey Today</span>
+              <Sparkles size={13} className="text-purple-400" />
+              <span className="text-xs font-medium text-purple-300">Begin Your Discovery Journey</span>
             </div>
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-heading text-white mb-6 leading-tight">
-              Your startup OS<br />awaits.
+              Know yourself.<br />
+              <GradientText from={C.purple} to={C.pink}>Build what you were born to create.</GradientText>
             </h2>
             <p className="text-white/40 text-xl mb-10 max-w-xl mx-auto">
-              Join 1,000+ founders who replaced 6 apps with one. Free forever, works offline, installable anywhere.
+              Start with who you are. The platform does the rest — identity mapping, personalized roadmap, AI mentor, startup workspace, all in one.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               {user ? (
                 <Link to="/dashboard">
                   <motion.button whileHover={{ scale: 1.05, boxShadow: '0 12px 50px rgba(108,71,255,0.6)' }} whileTap={{ scale: 0.97 }}
-                    className="px-10 py-4 rounded-2xl text-lg font-bold text-white"
+                    className="px-10 py-4 rounded-2xl text-lg font-bold text-white inline-flex items-center gap-2"
                     style={{ background: 'linear-gradient(135deg, #6C47FF, #F40076)', boxShadow: '0 6px 30px rgba(108,71,255,0.45)' }}>
-                    Open My Dashboard <ArrowRight className="inline ml-2" size={20} />
+                    <Zap size={20} />
+                    Open My Dashboard
                   </motion.button>
                 </Link>
               ) : (
                 <Link to="/signup">
                   <motion.button whileHover={{ scale: 1.05, boxShadow: '0 12px 50px rgba(108,71,255,0.6)' }} whileTap={{ scale: 0.97 }}
-                    className="px-10 py-4 rounded-2xl text-lg font-bold text-white"
+                    className="px-10 py-4 rounded-2xl text-lg font-bold text-white inline-flex items-center gap-2"
                     style={{ background: 'linear-gradient(135deg, #6C47FF, #F40076)', boxShadow: '0 6px 30px rgba(108,71,255,0.45)' }}>
-                    Start Building Free <ArrowRight className="inline ml-2" size={20} />
+                    <Sparkles size={20} />
+                    Begin Your Discovery — Free
                   </motion.button>
                 </Link>
               )}
@@ -1232,7 +1528,7 @@ const CTASection: React.FC<{ user: any }> = ({ user }) => {
             </div>
             {/* Trust badges */}
             <div className="flex flex-wrap items-center justify-center gap-6 mt-10 text-white/25 text-xs">
-              {['✓ No credit card required', '✓ Works offline (PWA)', '✓ Install on any device', '✓ Free forever'].map(b => (
+              {['✓ No credit card required', '✓ Works offline (PWA)', '✓ Install on any device', '✓ Free forever · Identity-First'].map(b => (
                 <span key={b} className="flex items-center gap-1">{b}</span>
               ))}
             </div>
@@ -1339,7 +1635,9 @@ export const LandingPage: React.FC = () => {
 
       <Nav user={user} />
       <HeroSection />
-      <ShowcaseSection />
+      <PhilosophySection />
+      <FiveQuestionsSection />
+      <TwelvePhaseSection />
       <PillarsSection />
       <JourneySection />
       <MentorsSection />

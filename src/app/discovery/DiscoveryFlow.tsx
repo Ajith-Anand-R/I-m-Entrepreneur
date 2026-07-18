@@ -43,7 +43,6 @@ export const DiscoveryFlow: React.FC = () => {
   const [direction, setDirection] = useState(1);
 
   const chapter = CHAPTERS[chapterIndex]!;
-  const progress = ((chapterIndex + 1) / CHAPTERS.length) * 100;
   const isLastChapter = chapterIndex === CHAPTERS.length - 1;
 
   // Check completion per chapter

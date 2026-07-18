@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'; // Trivial refresh 
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ArrowRight, Check, Lock, Sparkles, Search, Lightbulb,
+  ArrowRight, Check, Sparkles, Search, Lightbulb,
   Target, Wrench, Wallet, Users, Scale, Rocket, TrendingUp, Crown
 } from 'lucide-react';
 import { useIdentityStore } from '../../store/useIdentityStore';

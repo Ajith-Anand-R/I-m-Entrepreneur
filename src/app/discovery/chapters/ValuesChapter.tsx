@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, GripVertical } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useIdentityStore, type ValueItem } from '../../../store/useIdentityStore';
 
 const SG = "'Space Grotesk', sans-serif";

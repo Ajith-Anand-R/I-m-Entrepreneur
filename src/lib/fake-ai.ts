@@ -82,7 +82,6 @@ export async function generateMentorResponse(
 
     case 'legal-mentor':
       if (promptLower.includes('nda') || promptLower.includes('agreement') || promptLower.includes('sign')) {
-        const hasNDA = docTypes.includes('Funding documents') || docTypes.includes('Reports');
         return {
           text: `For legal compliance, protect your proprietary kiosk mechanical dispensing designs. Before sharing specifications with hardware manufacturers or distributors, you must execute a **Mutual Non-Disclosure Agreement**. I can generate one for you immediately.`,
           suggestedAction: { type: 'generate_doc', id: 'nda', label: 'Generate Mutual NDA' }
