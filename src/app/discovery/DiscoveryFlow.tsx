@@ -58,7 +58,7 @@ export const DiscoveryFlow: React.FC = () => {
   const handleChapterDone = () => {
     if (isLastChapter) {
       setDiscoveryPhase('problems');
-      navigate('/discover/problems');
+      navigate('/onboarding/problems');
     } else {
       setDirection(1);
       setChapterIndex((i) => i + 1);
@@ -70,7 +70,7 @@ export const DiscoveryFlow: React.FC = () => {
       setDirection(-1);
       setChapterIndex((i) => i - 1);
     } else {
-      navigate('/discover/inspiration');
+      navigate('/onboarding/inspiration');
     }
   };
 

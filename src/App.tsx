@@ -56,22 +56,39 @@ const AnimatedRoutes: React.FC = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        {/* Onboarding & Authentication */}
+
+        {/* ═══════════════════════════════════════
+            PUBLIC — No auth required
+        ═══════════════════════════════════════ */}
+        <Route path="/" element={<PageWrapper><LandingPage /></PageWrapper>} />
         <Route path="/splash" element={<PageWrapper><Splash /></PageWrapper>} />
         <Route path="/login" element={<PageWrapper><SignUp isLogin={true} /></PageWrapper>} />
         <Route path="/signup" element={<PageWrapper><SignUp isLogin={false} /></PageWrapper>} />
+
+        {/* ═══════════════════════════════════════
+            ONBOARDING — Unified linear flow
+            Phase 1: Know Yourself (Identity)
+            Phase 2: Shape Your Startup
+        ═══════════════════════════════════════ */}
         <Route path="/onboarding" element={<PageWrapper><ProtectedRoute><InspirationScreen /></ProtectedRoute></PageWrapper>} />
-        <Route path="/setup" element={<PageWrapper><ProtectedRoute><SetupWizard /></ProtectedRoute></PageWrapper>} />
+        <Route path="/onboarding/inspiration" element={<PageWrapper><ProtectedRoute><InspirationScreen /></ProtectedRoute></PageWrapper>} />
+        <Route path="/onboarding/identity" element={<PageWrapper><ProtectedRoute><DiscoveryFlow /></ProtectedRoute></PageWrapper>} />
+        <Route path="/onboarding/problems" element={<PageWrapper><ProtectedRoute><ProblemDiscovery /></ProtectedRoute></PageWrapper>} />
+        <Route path="/onboarding/profile" element={<PageWrapper><ProtectedRoute><ProfileReveal /></ProtectedRoute></PageWrapper>} />
+        <Route path="/onboarding/roadmap" element={<PageWrapper><ProtectedRoute><RoadmapPreview /></ProtectedRoute></PageWrapper>} />
+        <Route path="/onboarding/startup" element={<PageWrapper><ProtectedRoute><SetupWizard /></ProtectedRoute></PageWrapper>} />
 
-        {/* Identity Discovery Flow */}
-        <Route path="/discover/inspiration" element={<PageWrapper><ProtectedRoute><InspirationScreen /></ProtectedRoute></PageWrapper>} />
-        <Route path="/discover/identity" element={<PageWrapper><ProtectedRoute><DiscoveryFlow /></ProtectedRoute></PageWrapper>} />
-        <Route path="/discover/problems" element={<PageWrapper><ProtectedRoute><ProblemDiscovery /></ProtectedRoute></PageWrapper>} />
-        <Route path="/discover/profile" element={<PageWrapper><ProtectedRoute><ProfileReveal /></ProtectedRoute></PageWrapper>} />
-        <Route path="/discover/roadmap" element={<PageWrapper><ProtectedRoute><RoadmapPreview /></ProtectedRoute></PageWrapper>} />
+        {/* Legacy discovery routes → redirect to unified onboarding */}
+        <Route path="/discover/inspiration" element={<Navigate to="/onboarding/inspiration" replace />} />
+        <Route path="/discover/identity" element={<Navigate to="/onboarding/identity" replace />} />
+        <Route path="/discover/problems" element={<Navigate to="/onboarding/problems" replace />} />
+        <Route path="/discover/profile" element={<Navigate to="/onboarding/profile" replace />} />
+        <Route path="/discover/roadmap" element={<Navigate to="/onboarding/roadmap" replace />} />
+        <Route path="/setup" element={<Navigate to="/onboarding/startup" replace />} />
 
-        {/* Main Workspace Routes */}
-        <Route path="/" element={<PageWrapper><LandingPage /></PageWrapper>} />
+        {/* ═══════════════════════════════════════
+            MAIN APP — Authenticated workspace
+        ═══════════════════════════════════════ */}
         <Route path="/dashboard" element={<PageWrapper><ProtectedRoute><DashboardHome /></ProtectedRoute></PageWrapper>} />
         <Route path="/workspace" element={<PageWrapper><ProtectedRoute><WorkspaceHome /></ProtectedRoute></PageWrapper>} />
         <Route path="/journey" element={<PageWrapper><ProtectedRoute><JourneyHome /></ProtectedRoute></PageWrapper>} />

@@ -28,7 +28,7 @@ export const HunchBook: React.FC = () => {
     return hunchBook.filter(
       (e) =>
         e.content.toLowerCase().includes(q) ||
-        e.tags.some((t) => t.toLowerCase().includes(q)) ||
+        e.tags.some((t: string) => t.toLowerCase().includes(q)) ||
         e.aiTheme?.toLowerCase().includes(q),
     );
   }, [hunchBook, searchQuery]);
@@ -219,7 +219,7 @@ export const HunchBook: React.FC = () => {
         )}
 
         {/* Entries list */}
-        {filteredEntries.map((entry, i) => (
+        {filteredEntries.map((entry: HunchBookEntry, i: number) => (
           <motion.div
             key={entry.id}
             layout
@@ -246,7 +246,7 @@ export const HunchBook: React.FC = () => {
                       {entry.aiTheme}
                     </span>
                   )}
-                  {entry.tags.map((tag) => (
+                  {entry.tags.map((tag: string) => (
                     <span key={tag} className="px-2 py-0.5 rounded-lg text-[9px] font-bold"
                       style={{ background: 'rgba(108,71,255,0.06)', color: 'var(--text-muted)' }}>
                       #{tag}

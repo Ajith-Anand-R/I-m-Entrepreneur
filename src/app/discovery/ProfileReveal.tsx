@@ -35,7 +35,7 @@ export const ProfileReveal: React.FC = () => {
 
   const handleContinue = () => {
     setDiscoveryPhase('roadmap');
-    navigate('/discover/roadmap');
+    navigate('/onboarding/roadmap');
   };
 
   // Loading state

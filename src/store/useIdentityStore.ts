@@ -99,6 +99,7 @@ interface IdentityState {
   discoveryPhase: DiscoveryPhase;
   discoveryStartedAt: number | null;
   discoveryCompletedAt: number | null;
+  onboardingComplete: boolean; // true when full unified onboarding is finished
 
   // Phase 2: Identity Discovery
   personality: PersonalityDimension[];
@@ -116,10 +117,15 @@ interface IdentityState {
   // Phase 4: Hunch Book (accessible anytime)
   hunchBook: HunchBookEntry[];
 
+  // ── Computed helpers ──
+  isDiscoveryDone: () => boolean;
+  identityScore: () => number;
+
   // ── Actions ──
   setDiscoveryPhase: (phase: DiscoveryPhase) => void;
   startDiscovery: () => void;
   completeDiscovery: () => void;
+  setOnboardingComplete: (done: boolean) => void;
 
   // Personality
   setPersonality: (dimensions: PersonalityDimension[]) => void;
@@ -164,6 +170,7 @@ const initialState = {
   discoveryPhase: 'not_started' as DiscoveryPhase,
   discoveryStartedAt: null as number | null,
   discoveryCompletedAt: null as number | null,
+  onboardingComplete: false,
   personality: [] as PersonalityDimension[],
   values: [] as ValueItem[],
   passions: [] as PassionItem[],
@@ -180,7 +187,7 @@ const initialState = {
 
 export const useIdentityStore = create<IdentityState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       ...initialState,
 
       // ── Phase management ──
@@ -197,6 +204,25 @@ export const useIdentityStore = create<IdentityState>()(
           discoveryPhase: 'completed',
           discoveryCompletedAt: Date.now(),
         }),
+
+      setOnboardingComplete: (done) => set({ onboardingComplete: done }),
+
+      // ── Computed helpers ──
+      isDiscoveryDone: (): boolean => {
+        const s = get();
+        return s.discoveryPhase === 'completed' && s.entrepreneurProfile !== null;
+      },
+
+      identityScore: (): number => {
+        const s = get();
+        let pts = 0;
+        if (s.personality.length >= 3) pts += 3;
+        if (s.values.length >= 3) pts += 3;
+        if (s.passions.length >= 1) pts += 3;
+        if (s.skills.length >= 1) pts += 3;
+        if (s.problems.length >= 1) pts += 3;
+        return pts; // max 15
+      },
 
       // ── Personality ──
       setPersonality: (dimensions) => set({ personality: dimensions }),

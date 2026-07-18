@@ -137,7 +137,7 @@ export const InspirationScreen: React.FC = () => {
 
   const handleBeginDiscovery = () => {
     setDiscoveryPhase('personality');
-    navigate('/discover/identity');
+    navigate('/onboarding/identity');
   };
 
   // Slide animation variants
@@ -242,16 +242,6 @@ export const InspirationScreen: React.FC = () => {
             I'm Entrepreneur
           </span>
         </div>
-        <button
-          onClick={() => {
-            setDiscoveryPhase('personality');
-            navigate('/discover/identity');
-          }}
-          className="text-[11px] font-semibold text-white/30 hover:text-white/60 transition-colors uppercase tracking-wider"
-          style={{ fontFamily: SG }}
-        >
-          Skip →
-        </button>
       </div>
 
       {/* ── Progress Bar ── */}

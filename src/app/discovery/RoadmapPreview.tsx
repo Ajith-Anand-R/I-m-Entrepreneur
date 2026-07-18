@@ -6,6 +6,7 @@ import {
   Target, Wrench, Wallet, Users, Scale, Rocket, TrendingUp, Crown
 } from 'lucide-react';
 import { useIdentityStore } from '../../store/useIdentityStore';
+import { useStartupStore } from '../../store/useStartupStore';
 import { generatePersonalizedRoadmap, type RoadmapStep } from '../../lib/fake-identity';
 
 const SG = "'Space Grotesk', sans-serif";
@@ -48,6 +49,7 @@ const levelIcons: Record<number, React.ReactNode> = {
 export const RoadmapPreview: React.FC = () => {
   const navigate = useNavigate();
   const { entrepreneurProfile, setDiscoveryPhase } = useIdentityStore();
+  const { seedFromIdentity } = useStartupStore();
   const [steps, setSteps] = useState<RoadmapStep[]>([]);
   const [expanded, setExpanded] = useState<number | null>(null);
   const [showSteps, setShowSteps] = useState(false);
@@ -71,7 +73,9 @@ export const RoadmapPreview: React.FC = () => {
 
   const handleBeginJourney = () => {
     setDiscoveryPhase('completed');
-    navigate('/dashboard');
+    // Seed startup store from identity data before entering setup
+    seedFromIdentity();
+    navigate('/onboarding/startup');
   };
 
   if (!entrepreneurProfile) {
@@ -247,7 +251,7 @@ export const RoadmapPreview: React.FC = () => {
                 <p className="text-[12px] leading-relaxed font-medium text-white/50">
                   This roadmap is personalized for you based on your identity as a{' '}
                   <strong className="text-white/70">{entrepreneurProfile.archetype}</strong>.
-                  Your journey starts with Level 1 — and we'll guide you every step of the way. Ready?
+                  Now let's translate who you are into your startup's foundation. Ready?
                 </p>
               </div>
             </div>
@@ -263,7 +267,7 @@ export const RoadmapPreview: React.FC = () => {
                 boxShadow: '0 8px 32px rgba(108,71,255,0.25)',
               }}
             >
-              <span>Begin My Founder Journey</span>
+              <span>Shape My Startup</span>
               <ArrowRight className="w-5 h-5" />
             </motion.button>
           </motion.div>

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
+import { useIdentityStore } from '../../store/useIdentityStore';
 
 /* ── Types ── */
 interface SignUpProps { isLogin?: boolean; }
@@ -75,6 +76,7 @@ export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, register, googleSignIn, resetPassword, loginAsDemo } = useAuth();
+  const { onboardingComplete } = useIdentityStore();
 
   const [screen, setScreen] = useState<Screen>('form');
   const [email, setEmail] = useState('');
@@ -90,7 +92,10 @@ export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
   useEffect(() => { emailRef.current?.focus(); }, []);
 
   const from = (location.state as { from?: Location })?.from?.pathname ?? '/dashboard';
-  const afterAuthPath = isLogin ? from : '/onboarding';
+  // For login: respect the saved destination, but gate behind onboarding if not done
+  const afterAuthPath = isLogin
+    ? (onboardingComplete ? from : '/onboarding')
+    : '/onboarding';
   const strength = getPasswordStrength(password);
   const passwordsMatch = !isLogin && confirmPassword.length > 0 && password === confirmPassword;
   const clearError = () => setError(null);
@@ -128,7 +133,8 @@ export const SignUp: React.FC<SignUpProps> = ({ isLogin = false }) => {
     finally { setIsLoading(false); }
   };
 
-  const handleDemoLogin = () => { loginAsDemo(); navigate('/dashboard', { replace: true }); };
+  // Demo login: go through onboarding so identity + startup data gets seeded properly
+  const handleDemoLogin = () => { loginAsDemo(); navigate('/onboarding', { replace: true }); };
 
   /* ── Input styling ── */
   const inputCls = (field: string) =>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Check, Sparkles, BookOpen, FileCheck, Flame, Star, Zap, Trophy } from 'lucide-react';
+import { Lock, Check, Sparkles, BookOpen, FileCheck, Flame, Star, Zap, Trophy, Brain } from 'lucide-react';
 import { useStartupStore } from '../../store/useStartupStore';
+import { useIdentityStore } from '../../store/useIdentityStore';
 import { JOURNEY_LEVELS } from '../../mockData/fixtures';
 import { ParticleField } from '../../components/ParticleField';
 import { useCountUp } from '../../components/AnimatedCounter';
@@ -43,11 +44,18 @@ const EnergyPath: React.FC = () => (
   </div>
 );
 
+// Levels 1–3 are seeded from Discovery — they represent foundational identity work
+const DISCOVERY_SEEDED_LEVELS = [1, 2, 3];
+
 export const JourneyHome: React.FC = () => {
   const { currentJourneyLevel, bookLinked, setBookLinked } = useStartupStore();
+  const { entrepreneurProfile } = useIdentityStore();
   const navigate = useNavigate();
   const [hoveredLevel, setHoveredLevel] = useState<number | null>(null);
   const { value: animLevel, ref: levelRef } = useCountUp(currentJourneyLevel, 1000, 200);
+
+  // If identity discovery is done, treat levels 1-3 as auto-completed from that work
+  const discoveryDone = !!entrepreneurProfile;
 
   const handleClick = (id: number, state: NodeState) => {
     if (state === 'locked') return;
@@ -191,9 +199,10 @@ export const JourneyHome: React.FC = () => {
         {/* Level nodes */}
         <div className="relative z-10 space-y-12 md:space-y-16 max-w-lg mx-auto">
           {JOURNEY_LEVELS.map((level, idx) => {
-            const isCompleted = level.id < currentJourneyLevel;
-            const isCurrent   = level.id === currentJourneyLevel;
-            const isLocked    = level.id > currentJourneyLevel;
+            const isSeededLevel = discoveryDone && DISCOVERY_SEEDED_LEVELS.includes(level.id);
+            const isCompleted = level.id < currentJourneyLevel || isSeededLevel;
+            const isCurrent   = level.id === currentJourneyLevel && !isSeededLevel;
+            const isLocked    = level.id > currentJourneyLevel && !isSeededLevel;
             const state: NodeState = isCompleted ? 'completed' : isCurrent ? 'current' : 'locked';
             const isLeft = idx % 2 === 0;
 
@@ -306,13 +315,17 @@ export const JourneyHome: React.FC = () => {
                       >
                         Level {level.id}
                       </span>
-                      {isCompleted && (
+                      {isSeededLevel ? (
+                        <span className="flex items-center space-x-1 text-[9px] font-black text-violet-600 bg-violet-50 px-2 py-0.5 rounded-full border border-violet-100">
+                          <Brain className="w-3 h-3" />
+                          <span>From Discovery</span>
+                        </span>
+                      ) : isCompleted ? (
                         <span className="flex items-center space-x-1 text-[9px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
                           <FileCheck className="w-3 h-3" />
                           <span>Approved</span>
                         </span>
-                      )}
-                      {isCurrent && (
+                      ) : isCurrent ? (
                         <motion.span
                           animate={{ opacity: [0.6, 1, 0.6] }}
                           transition={{ duration: 1.5, repeat: Infinity }}
@@ -321,7 +334,7 @@ export const JourneyHome: React.FC = () => {
                           <Flame className="w-3 h-3" />
                           <span>Active</span>
                         </motion.span>
-                      )}
+                      ) : null}
                     </div>
 
                     <h3 className={`font-black text-sm tracking-tight

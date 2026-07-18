@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useIdentityStore } from '../store/useIdentityStore';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -9,6 +10,7 @@ interface ProtectedRouteProps {
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
+  const { onboardingComplete } = useIdentityStore();
 
   if (loading) {
     return (
@@ -32,6 +34,13 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   if (!user) {
     // Preserve the destination so we can redirect back after login
     return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  // Onboarding gate: authenticated but not yet done onboarding → force flow
+  // Allow all /onboarding/* routes through so we don't create a redirect loop
+  const isOnboardingRoute = location.pathname.startsWith('/onboarding');
+  if (!onboardingComplete && !isOnboardingRoute) {
+    return <Navigate to="/onboarding" replace />;
   }
 
   return <>{children}</>;

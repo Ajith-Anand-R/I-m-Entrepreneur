@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 import {
   LayoutDashboard, Briefcase, BookOpen, MessageSquare,
   MoreHorizontal, Bell, Sparkles, X, Activity,
-  ChevronRight, LogOut, Settings,
+  ChevronRight, LogOut, Settings, Lightbulb,
 } from 'lucide-react';
 import { useStartupStore } from '../store/useStartupStore';
 import { NotificationPanel } from './NotificationPanel';
@@ -69,7 +69,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const [showChat, setShowChat] = useState(false);
   const location = useLocation();
 
-  const isAuth = ['/login','/signup','/onboarding','/splash'].some(p => location.pathname.startsWith(p)) || location.pathname === '/';
+  const isAuth = ['/login','/signup','/onboarding','/splash','/discover'].some(p => location.pathname.startsWith(p)) || location.pathname === '/';
   if (isAuth) return <>{children}</>;
 
   const active = NAV.find(n => n.to==='/dashboard' ? location.pathname==='/dashboard' : location.pathname.startsWith(n.to)) ?? NAV[0];
@@ -218,6 +218,24 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
                   <p className="text-[10px] text-white/20 font-medium">Tap for breakdown</p>
                   <ChevronRight className="w-3 h-3 text-white/15" />
                 </div>
+              </motion.div>
+            </Link>
+          </div>
+
+          {/* ── HunchBook quick-link ── */}
+          <div className="relative z-10 mx-3 mb-2">
+            <Link to="/hunchbook">
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl cursor-pointer group"
+                style={{ background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.1)' }}>
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center"
+                  style={{ background: 'rgba(245,158,11,0.12)' }}>
+                  <Lightbulb className="w-3.5 h-3.5" style={{ color: '#F59E0B' }} />
+                </div>
+                <span className="text-[11px] font-bold text-white/45 group-hover:text-white/70 transition-colors" style={{ fontFamily: SG }}>
+                  HunchBook
+                </span>
+                <ChevronRight className="w-3 h-3 ml-auto text-white/15" />
               </motion.div>
             </Link>
           </div>

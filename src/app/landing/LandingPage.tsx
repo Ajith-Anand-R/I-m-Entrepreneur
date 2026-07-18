@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import {
   Sparkles, Zap, BookOpen, MessageSquare, Award, Download, CheckCircle2,
@@ -8,6 +8,7 @@ import {
   Cpu, Database, Smartphone, Code2, Lock, Share2, Menu, X
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useIdentityStore } from '../../store/useIdentityStore';
 import { ThreeScene } from '../../components/landing/ThreeScene';
 import { AnimatedCounter } from '../../components/landing/AnimatedCounter';
 import { GradientText } from '../../components/landing/GradientText';
@@ -1312,6 +1313,12 @@ const Footer: React.FC = () => (
 // ─────────────────────────────────────────────
 export const LandingPage: React.FC = () => {
   const { user } = useAuth();
+  const { onboardingComplete } = useIdentityStore();
+
+  // Already authenticated — send straight to the right place
+  if (user) {
+    return <Navigate to={onboardingComplete ? '/dashboard' : '/onboarding'} replace />;
+  }
 
   return (
     <div className="w-full min-h-screen overflow-x-hidden" style={{ background: C.dark }}>

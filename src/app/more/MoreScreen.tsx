@@ -9,7 +9,8 @@ import {
   Settings, 
   Share2, 
   HelpCircle,
-  TrendingUp
+  TrendingUp,
+  Lightbulb
 } from 'lucide-react';
 import { useStartupStore } from '../../store/useStartupStore';
 
@@ -21,6 +22,7 @@ export const MoreScreen: React.FC = () => {
     { to: '/builder', label: 'AI Startup Builder', desc: 'Auto-recommended task roadmap checklist.', icon: Sparkles, color: 'text-accent-violet bg-accent-violet/10' },
     { to: '/academy', label: 'Learning Academy', desc: 'Structured entrepreneurship curriculum and video lectures.', icon: BookOpen, color: 'text-accent-amber bg-accent-amber/10' },
     { to: '/generator', label: 'AI Document Generator', desc: 'Pre-filled wizards drafting SWOT, NDAs, and business canvases.', icon: FileCheck, color: 'text-accent-teal bg-accent-teal/10' },
+    { to: '/hunchbook', label: 'HunchBook', desc: 'Capture startup ideas, hunches, and shower thoughts anytime.', icon: Lightbulb, color: 'text-amber-500 bg-amber-500/10' },
     { to: '/community', label: 'Founder Community', desc: 'Connect with local co-founders, advisors, and mentors.', icon: Users, color: 'text-ink-700 bg-ink-50' },
     { to: '/meetings', label: 'Consultation Sessions', desc: 'Schedule appointments and check notes from previous sessions.', icon: Calendar, color: 'text-accent-green bg-accent-green/10' },
     { to: '/settings', label: 'Account & Settings', desc: 'Control interface theme variables, profiles details, and resets.', icon: Settings, color: 'text-slate-500 bg-slate-100' },

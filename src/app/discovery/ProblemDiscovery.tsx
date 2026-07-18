@@ -43,7 +43,7 @@ export const ProblemDiscovery: React.FC = () => {
 
   const handleContinue = () => {
     setDiscoveryPhase('profileReveal');
-    navigate('/discover/profile');
+    navigate('/onboarding/profile');
   };
 
   // Domain selection view
@@ -54,7 +54,7 @@ export const ProblemDiscovery: React.FC = () => {
 
         <div className="relative z-10 px-4 pt-5 pb-3">
           <div className="flex items-center justify-between mb-4">
-            <button onClick={() => navigate('/discover/identity')}
+            <button onClick={() => navigate('/onboarding/identity')}
               className="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-black/5 transition-colors">
               <ArrowLeft className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
             </button>

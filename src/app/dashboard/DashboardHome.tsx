@@ -12,6 +12,7 @@ import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar } fro
 import { ThreeDCard } from '../../components/ThreeDCard';
 import { ParticleField } from '../../components/ParticleField';
 import { useCountUp } from '../../components/AnimatedCounter';
+import { useIdentityStore } from '../../store/useIdentityStore';
 
 /* ── Design tokens ── */
 const SG = "'Space Grotesk',sans-serif";
@@ -80,6 +81,7 @@ const SpinCard: React.FC<{ children: React.ReactNode; speed?: number }> = ({ chi
 /* ══════════════════════════════════════════════════════════ */
 export const DashboardHome: React.FC = () => {
   const { startupName, founderName, vision, score, currentJourneyLevel, builderTasks } = useStartupStore();
+  const { entrepreneurProfile, hunchBook } = useIdentityStore();
   const [docs, setDocs] = useState<DocumentRecord[]>([]);
 
   const { value: animScore, ref: scoreRef } = useCountUp(score, 2000, 300);
@@ -248,6 +250,89 @@ export const DashboardHome: React.FC = () => {
           );
         })}
       </div>
+
+      {/* ════════════════════════════════════════
+          IDENTITY CARD — Founder's DNA
+      ════════════════════════════════════════ */}
+      {entrepreneurProfile && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Archetype Card */}
+          <Card className="overflow-hidden">
+            <div className="h-[3px] w-full" style={{ background: 'linear-gradient(90deg, #6C47FF, #F43F5E, #F59E0B)' }} />
+            <div className="p-5 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
+                  style={{ background: 'linear-gradient(135deg, #6C47FF, #8B7AFF)' }}>
+                  <Brain className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-ink-300 uppercase tracking-wider" style={{ fontFamily: SG }}>Your Archetype</p>
+                  <p className="text-[16px] font-black text-ink-900" style={{ fontFamily: SG }}>{entrepreneurProfile.archetype}</p>
+                </div>
+              </div>
+              <p className="text-[12px] text-ink-400 leading-relaxed italic">"{entrepreneurProfile.tagline}"</p>
+              <div className="flex flex-wrap gap-2">
+                {entrepreneurProfile.topTraits.map(t => (
+                  <span key={t} className="px-2.5 py-1 rounded-lg text-[10px] font-bold"
+                    style={{ background: 'rgba(108,71,255,0.06)', color: '#6C47FF' }}>{t}</span>
+                ))}
+                {entrepreneurProfile.topValues.map(v => (
+                  <span key={v} className="px-2.5 py-1 rounded-lg text-[10px] font-bold"
+                    style={{ background: 'rgba(244,63,94,0.06)', color: '#F43F5E' }}>{v}</span>
+                ))}
+              </div>
+              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-accent/[0.06]">
+                <div>
+                  <p className="text-[9px] font-bold text-ink-300 uppercase tracking-wider">Primary Passion</p>
+                  <p className="text-[13px] font-bold text-ink-900" style={{ fontFamily: SG }}>{entrepreneurProfile.primaryPassion}</p>
+                </div>
+                <div>
+                  <p className="text-[9px] font-bold text-ink-300 uppercase tracking-wider">Problem Focus</p>
+                  <p className="text-[13px] font-bold text-ink-900" style={{ fontFamily: SG }}>{entrepreneurProfile.problemFocus}</p>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Recent Hunches Card */}
+          <Card className="overflow-hidden">
+            <div className="h-[3px] w-full" style={{ background: 'linear-gradient(90deg, #F59E0B, #F97316)' }} />
+            <div className="p-5 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'rgba(245,158,11,0.1)' }}>
+                    <Sparkles className="w-4 h-4" style={{ color: '#F59E0B' }} />
+                  </div>
+                  <p className="text-[10px] font-black text-ink-300 uppercase tracking-wider" style={{ fontFamily: SG }}>HunchBook</p>
+                </div>
+                <Link to="/hunchbook" className="text-[10px] font-bold text-[#F59E0B] uppercase tracking-wider hover:underline" style={{ fontFamily: SG }}>View All →</Link>
+              </div>
+              {hunchBook.length > 0 ? (
+                <div className="space-y-2">
+                  {hunchBook.slice(0, 3).map(h => (
+                    <div key={h.id} className="flex items-start gap-3 p-3 rounded-xl hover:bg-accent/[0.02] transition-colors"
+                      style={{ border: '1px solid rgba(245,158,11,0.08)' }}>
+                      <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: '#F59E0B' }} />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12px] text-ink-700 font-medium leading-relaxed truncate">{h.content}</p>
+                        {h.aiTheme && (
+                          <span className="text-[9px] font-bold px-2 py-0.5 rounded-md mt-1 inline-block"
+                            style={{ background: 'rgba(245,158,11,0.06)', color: '#F59E0B' }}>{h.aiTheme}</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-6 text-center">
+                  <p className="text-[12px] text-ink-300">No hunches yet. Start capturing ideas!</p>
+                  <Link to="/hunchbook" className="mt-2 text-[11px] font-bold text-[#F59E0B]">Open HunchBook →</Link>
+                </div>
+              )}
+            </div>
+          </Card>
+        </div>
+      )}
 
       {/* ════════════════════════════════════════
           BENTO GRID — Score · Radar · Tasks

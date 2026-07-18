@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useIdentityStore } from './useIdentityStore';
 
 export interface BuilderTask {
   id: string;
@@ -28,6 +29,7 @@ interface StartupState extends StartupProfile {
   bookLinked: boolean;
   score: number; // 0-100
   builderTasks: BuilderTask[];
+  seededFromIdentity: boolean; // true once seedFromIdentity() has been called
   // Actions
   updateProfile: (profile: Partial<StartupProfile>) => void;
   unlockNextLevel: () => void;
@@ -36,6 +38,7 @@ interface StartupState extends StartupProfile {
   setTasks: (tasks: BuilderTask[]) => void;
   recalculateScore: () => void;
   setBookLinked: (linked: boolean) => void;
+  seedFromIdentity: () => void;
   resetState: () => void;
 }
 
@@ -88,9 +91,10 @@ export const useStartupStore = create<StartupState>()(
   persist(
     (set, get) => ({
       ...defaultProfile,
-      currentJourneyLevel: 3, // Starts "alive" at Level 3 unlocked
-      bookLinked: true,
-      score: 45,
+      currentJourneyLevel: 1, // Starts at Level 1 — discovery handles early levels
+      bookLinked: false,
+      score: 0,
+      seededFromIdentity: false,
       builderTasks: initialTasks,
 
       updateProfile: (profile) => {
@@ -134,35 +138,68 @@ export const useStartupStore = create<StartupState>()(
 
       recalculateScore: () => {
         const state = get();
+        const identityStore = useIdentityStore.getState();
         
-        // 1. Profile completeness (up to 30 points)
+        // 1. Identity Discovery (up to 15 points)
+        const identityPoints = identityStore.identityScore();
+
+        // 2. Profile completeness (up to 20 points)
         let profilePoints = 0;
-        if (state.founderName) profilePoints += 5;
-        if (state.startupName) profilePoints += 5;
-        if (state.vision) profilePoints += 5;
-        if (state.mission) profilePoints += 5;
-        if (state.problemStatement) profilePoints += 5;
-        if (state.solution) profilePoints += 5;
+        if (state.founderName) profilePoints += 4;
+        if (state.startupName) profilePoints += 4;
+        if (state.vision) profilePoints += 4;
+        if (state.mission) profilePoints += 4;
+        if (state.problemStatement) profilePoints += 4;
 
-        // 2. Journey progress (up to 40 points)
-        // Level 1-15 maps to 40 points scale
-        const journeyPoints = Math.round((state.currentJourneyLevel / 15) * 40);
+        // 3. Journey progress (up to 30 points)
+        const journeyPoints = Math.round((state.currentJourneyLevel / 15) * 30);
 
-        // 3. Builder Task completion (up to 30 points)
+        // 4. Builder Task completion (up to 20 points)
         const completedTasksCount = state.builderTasks.filter(t => t.status === 'completed').length;
         const totalTasksCount = state.builderTasks.length || 1;
-        const taskPoints = Math.round((completedTasksCount / totalTasksCount) * 30);
+        const taskPoints = Math.round((completedTasksCount / totalTasksCount) * 20);
 
-        const totalScore = Math.min(100, profilePoints + journeyPoints + taskPoints);
+        // 5. Documents & KB placeholder (up to 15 points — future)
+        const docPoints = 0;
+
+        const totalScore = Math.min(100, identityPoints + profilePoints + journeyPoints + taskPoints + docPoints);
         set({ score: totalScore });
+      },
+
+      seedFromIdentity: () => {
+        const identity = useIdentityStore.getState();
+        const profile = identity.entrepreneurProfile;
+        if (!profile || get().seededFromIdentity) return;
+
+        // Find highest-passion problem
+        const topProblem = [...identity.problems].sort((a, b) => b.passionScore - a.passionScore)[0];
+
+        const updates: Partial<StartupProfile> = {};
+
+        // Only seed fields that are still at default/empty
+        if (!get().problemStatement || get().problemStatement === defaultProfile.problemStatement) {
+          updates.problemStatement = topProblem?.description || '';
+        }
+        if (!get().vision || get().vision === defaultProfile.vision) {
+          updates.vision = profile.primaryPassion
+            ? `Building a future where ${profile.problemFocus} is solved through ${profile.primaryPassion.toLowerCase()} innovation.`
+            : '';
+        }
+        if (!get().solution || get().solution === defaultProfile.solution) {
+          updates.solution = profile.suggestedRoadmapFocus || '';
+        }
+
+        set({ seededFromIdentity: true, ...updates });
+        get().recalculateScore();
       },
 
       resetState: () => {
         set({
           ...defaultProfile,
-          currentJourneyLevel: 3,
-          bookLinked: true,
-          score: 45,
+          currentJourneyLevel: 1,
+          bookLinked: false,
+          score: 0,
+          seededFromIdentity: false,
           builderTasks: initialTasks,
         });
       },
@@ -184,6 +221,7 @@ export const useStartupStore = create<StartupState>()(
         currentJourneyLevel: state.currentJourneyLevel,
         bookLinked: state.bookLinked,
         score: state.score,
+        seededFromIdentity: state.seededFromIdentity,
         builderTasks: state.builderTasks,
       }),
     }
