@@ -1,130 +1,84 @@
 import React from 'react';
-import { X, Sparkles, CheckCircle2, AlertCircle, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { X, Bell, Sparkles, FileText, BookOpen, Users } from 'lucide-react';
 
 interface NotificationPanelProps {
   onClose: () => void;
 }
 
-export const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose }) => {
-  const notifications = [
-    {
-      id: 'n-1',
-      type: 'review',
-      title: 'Level 2 Review Passed!',
-      message: 'Sunita Sharma validated your Mission statement. Level 3 is now unlocked.',
-      time: '2 hours ago',
-      isNew: true,
-      icon: CheckCircle2,
-      color: 'text-emerald-500 bg-emerald-50'
-    },
-    {
-      id: 'n-2',
-      type: 'ai',
-      title: 'DPR Ingestion Complete',
-      message: 'AI analyzed your uploaded DPR and added 4 new keys to your Knowledge Base.',
-      time: '5 hours ago',
-      isNew: true,
-      icon: Sparkles,
-      color: 'text-purple-500 bg-purple-50'
-    },
-    {
-      id: 'n-3',
-      type: 'warning',
-      title: 'Runway Warning',
-      message: 'Clara Dupont flagged that your high kiosk unit cost shrinks operating runway.',
-      time: '1 day ago',
-      isNew: false,
-      icon: AlertCircle,
-      color: 'text-rose-500 bg-rose-50'
-    },
-    {
-      id: 'n-4',
-      type: 'meeting',
-      title: 'Upcoming Pitch Session',
-      message: 'Angel pitch mock with Vikram Mehta scheduled for Friday, July 17 at 11:00 AM.',
-      time: '2 days ago',
-      isNew: false,
-      icon: Calendar,
-      color: 'text-amber-500 bg-amber-50'
-    }
-  ];
+const NOTIFICATIONS = [
+  { id: 1, icon: Sparkles, color: '#6C47FF', bg: 'rgba(108,71,255,0.08)', title: 'AI Mentor check-in', desc: 'Your mentor reviewed your pitch deck changes.', time: '2m ago' },
+  { id: 2, icon: FileText, color: '#38BDF8', bg: 'rgba(56,189,248,0.08)', title: 'Document analysed', desc: 'SWOT Analysis has been processed.', time: '15m ago' },
+  { id: 3, icon: BookOpen, color: '#F59E0B', bg: 'rgba(245,158,11,0.08)', title: 'Journey milestone', desc: 'You unlocked Level 4: Market validation.', time: '1h ago' },
+  { id: 4, icon: Users, color: '#34D399', bg: 'rgba(52,211,153,0.08)', title: 'Community update', desc: 'Rohan Sharma commented on your post.', time: '3h ago' },
+];
 
-  return (
-    <div className="fixed inset-0 z-50 overflow-hidden flex justify-end">
-      {/* Backdrop */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        onClick={onClose}
-        className="absolute inset-0 bg-slate-900/10 backdrop-blur-sm"
-      ></motion.div>
+export const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose }) => (
+  <>
+    {/* Backdrop */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-40 bg-black/10"
+      onClick={onClose}
+    />
 
-      {/* Drawer */}
-      <motion.div 
-        initial={{ x: '100%' }}
-        animate={{ x: 0 }}
-        exit={{ x: '100%' }}
-        transition={{ type: 'spring', damping: 26, stiffness: 220 }}
-        className="relative w-full max-w-sm bg-white/95 backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.05)] flex flex-col h-full z-10 border-l border-zinc-100"
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-zinc-100 bg-[#F9F9FB]">
-          <div>
-            <h2 className="text-sm font-bold text-slate-800 tracking-tight">Notifications</h2>
-            <p className="text-[10px] text-slate-400 font-medium mt-0.5">Updates & Recommendations</p>
-          </div>
-          <button 
-            onClick={onClose}
-            className="p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-          >
-            <X className="w-4.5 h-4.5" />
-          </button>
+    {/* Panel */}
+    <motion.div
+      initial={{ opacity: 0, x: 20, scale: 0.97 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      exit={{ opacity: 0, x: 20, scale: 0.97 }}
+      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+      className="fixed top-[60px] right-4 z-50 w-80 max-h-[70vh] overflow-y-auto rounded-2xl glass-frost-strong"
+      style={{ boxShadow: '0 20px 60px rgba(108,71,255,0.08), 0 8px 20px rgba(0,0,0,0.06)' }}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-accent/[0.06]">
+        <div className="flex items-center gap-2">
+          <Bell className="w-4 h-4 text-accent" />
+          <h3 className="text-sm font-bold text-ink-900 font-heading">Notifications</h3>
         </div>
+        <button onClick={onClose}
+          className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-accent-ghost transition-colors text-ink-300">
+          <X className="w-3.5 h-3.5" />
+        </button>
+      </div>
 
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-4">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-slate-400 tracking-wider">LATEST</span>
-            <button className="text-[10px] text-indigo-600 hover:underline font-semibold">Mark all read</button>
-          </div>
+      {/* Items */}
+      <div className="px-3 py-2 space-y-1">
+        {NOTIFICATIONS.map((n, i) => {
+          const Icon = n.icon;
+          return (
+            <motion.div
+              key={n.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-start gap-3 p-3 rounded-xl hover:bg-accent-ghost/50 transition-colors cursor-pointer"
+            >
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: n.bg }}>
+                <Icon className="w-4 h-4" style={{ color: n.color }} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[12px] font-semibold text-ink-900 leading-snug">{n.title}</p>
+                <p className="text-[11px] text-ink-300 mt-0.5 leading-relaxed">{n.desc}</p>
+              </div>
+              <span className="text-[10px] text-ink-300 font-medium shrink-0 mt-0.5">{n.time}</span>
+            </motion.div>
+          );
+        })}
+      </div>
 
-          <div className="space-y-3">
-            {notifications.map((n) => {
-              const Icon = n.icon;
-              return (
-                <div 
-                  key={n.id}
-                  className={`p-4 rounded-2xl border transition-all duration-300 hover:shadow-[0_4px_20px_rgba(0,0,0,0.02)] relative flex space-x-3.5
-                    ${n.isNew ? 'bg-white border-zinc-200/60 shadow-[0_2px_12px_rgba(0,0,0,0.01)]' : 'bg-transparent border-transparent'}
-                  `}
-                >
-                  {n.isNew && (
-                    <span className="absolute top-4 right-4 w-1.5 h-1.5 bg-indigo-500 rounded-full"></span>
-                  )}
-                  
-                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-black/5 ${n.color}`}>
-                    <Icon className="w-4 h-4" />
-                  </div>
+      {/* Footer */}
+      <div className="px-5 py-3 border-t border-accent/[0.06]">
+        <button className="text-[11px] font-bold text-accent hover:text-accent-deep transition-colors">
+          Mark all as read
+        </button>
+      </div>
+    </motion.div>
+  </>
+);
 
-                  <div className="flex-1 min-w-0 pr-2">
-                    <h4 className="text-xs font-bold text-slate-800 leading-snug tracking-tight">{n.title}</h4>
-                    <p className="text-[11px] text-slate-500 mt-1 leading-normal font-medium">{n.message}</p>
-                    <span className="text-[9px] text-slate-400 mt-2 block font-mono font-medium">{n.time}</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-zinc-100 bg-[#F9F9FB] text-center">
-          <span className="text-[10px] text-slate-400 font-medium">End of Notifications Feed</span>
-        </div>
-      </motion.div>
-    </div>
-  );
-};
+export default NotificationPanel;

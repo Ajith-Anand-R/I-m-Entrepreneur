@@ -1,41 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sparkles, Zap, ArrowRight } from 'lucide-react';
 
-/* ── Tiny animated star component ── */
-const Star: React.FC<{ style: React.CSSProperties }> = ({ style }) => (
-  <motion.div
-    className="absolute w-1 h-1 rounded-full bg-indigo-300/60"
-    style={style}
-    animate={{ opacity: [0, 1, 0], scale: [0, 1.2, 0] }}
-    transition={{
-      duration: Math.random() * 2 + 2,
-      repeat: Infinity,
-      delay: Math.random() * 3,
-      ease: 'easeInOut',
-    }}
-  />
-);
-
-const stars = Array.from({ length: 28 }, (_, i) => ({
-  id: i,
-  style: {
-    top:  `${Math.random() * 100}%`,
-    left: `${Math.random() * 100}%`,
-    width:  `${Math.random() * 3 + 1}px`,
-    height: `${Math.random() * 3 + 1}px`,
-  },
-}));
+const SG = "'Space Grotesk',sans-serif";
 
 const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.4 } },
+  show: { transition: { staggerChildren: 0.14, delayChildren: 0.3 } },
 };
-
 const fadeUp = {
-  hidden: { opacity: 0, y: 22 },
-  show:   { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 80, damping: 16 } },
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 80, damping: 16 } },
 };
 
 export const Splash: React.FC = () => {
@@ -47,113 +23,99 @@ export const Splash: React.FC = () => {
   }, [navigate]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-indigo-50/60 to-violet-50/80">
+    <div className="relative min-h-screen overflow-hidden flex flex-col items-center justify-center gradient-mesh-hero">
 
-      {/* ── Aurora orb backgrounds ── */}
+      {/* Ambient orbs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] aurora-orb-1 rounded-full opacity-70" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] aurora-orb-2 rounded-full opacity-60" />
-        <div className="absolute top-1/2 left-0   w-[300px] h-[300px] aurora-orb-3 rounded-full opacity-50" />
-        <div className="absolute top-1/3 right-0  w-[250px] h-[250px] aurora-orb-4 rounded-full opacity-50" />
+        <div className="orb orb-purple absolute w-[420px] h-[420px] -top-20 left-1/4" />
+        <div className="orb orb-sky absolute w-[320px] h-[320px] bottom-10 right-1/4" />
+        <div className="orb orb-mint absolute w-[260px] h-[260px] top-1/3 -right-10" />
       </div>
 
-      {/* ── Floating sparkle stars ── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {stars.map(s => <Star key={s.id} style={s.style} />)}
-      </div>
-
-      {/* ── Animated grid mesh ── */}
-      <div className="absolute inset-0 pointer-events-none opacity-30"
+      {/* Subtle grid */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
-          backgroundImage: 'linear-gradient(rgba(99,102,241,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.07) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
+          backgroundImage: 'linear-gradient(rgba(108,71,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(108,71,255,1) 1px, transparent 1px)',
+          backgroundSize: '52px 52px',
         }}
       />
 
-      {/* ── Center content ── */}
+      {/* Center content */}
       <motion.div
         variants={stagger}
         initial="hidden"
         animate="show"
-        className="relative z-10 flex flex-col items-center text-center px-6 space-y-7"
+        className="relative z-10 flex flex-col items-center text-center px-6 space-y-6"
       >
-
-        {/* Logo mark — animated assembly */}
-        <motion.div
-          variants={fadeUp}
-          className="relative"
-        >
-          {/* Outer glow ring */}
+        {/* Logo */}
+        <motion.div variants={fadeUp} className="relative">
+          {/* Glow */}
           <motion.div
-            animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.6, 0.3] }}
+            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute inset-0 -m-3 rounded-3xl bg-gradient-to-br from-indigo-400/30 to-violet-400/30 blur-lg"
+            className="absolute inset-0 -m-4 rounded-3xl blur-xl"
+            style={{ background: 'radial-gradient(circle, rgba(108,71,255,0.25), transparent 70%)' }}
           />
 
-          {/* Secondary ring */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            className="absolute inset-0 -m-1.5 rounded-3xl border border-indigo-200/50 border-dashed"
-          />
-
-          {/* Main logo tile */}
           <motion.div
             animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="relative w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-500 via-violet-500 to-purple-600 flex items-center justify-center shadow-[0_16px_48px_rgba(99,102,241,0.4)] border border-white/30"
+            transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="relative w-20 h-20 rounded-3xl flex items-center justify-center overflow-hidden border border-white/20 bg-black"
+            style={{
+              boxShadow: '0 16px 48px rgba(108,71,255,0.3)',
+            }}
           >
-            {/* Inner shine */}
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/25 to-transparent" />
-            <span className="text-3xl font-black text-white relative z-10 tracking-tight">IE</span>
+            <img src="/beyond_guidance_logo.jpg" alt="Beyond Guidance" className="w-full h-full object-contain scale-[1.3] -translate-y-[2px]" />
 
             {/* Corner sparkle */}
             <motion.div
-              animate={{ scale: [1, 1.4, 1], rotate: [0, 15, 0] }}
-              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-amber-400 rounded-lg flex items-center justify-center shadow-md"
+              animate={{ scale: [1, 1.3, 1], rotate: [0, 10, 0] }}
+              transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
+              className="absolute -top-2 -right-2 w-5 h-5 rounded-lg flex items-center justify-center z-10"
+              style={{ background: '#F59E0B', boxShadow: '0 4px 12px rgba(245,158,11,0.4)' }}
             >
-              <Sparkles className="w-3 h-3 text-white" />
+              <Sparkles className="w-2.5 h-2.5 text-white" />
             </motion.div>
           </motion.div>
         </motion.div>
 
         {/* Brand name */}
         <motion.div variants={fadeUp} className="space-y-2">
-          <h1 className="text-4xl font-black tracking-tight text-slate-900 leading-none">
-            I'm{' '}
-            <span className="gradient-text">Entrepreneur</span>
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight leading-none" style={{ fontFamily: SG, color: 'var(--text-primary)' }}>
+            I'm <span className="text-brand">Entrepreneur</span>
           </h1>
-          <div className="flex items-center justify-center space-x-2 mt-2">
-            <Zap className="w-3 h-3 text-indigo-400" />
-            <span className="text-[11px] font-black text-indigo-400 uppercase tracking-[0.25em]">
+          <div className="flex items-center justify-center gap-2 mt-2">
+            <Zap className="w-3 h-3 text-accent" />
+            <span className="text-[10px] font-black uppercase tracking-[0.25em]" style={{ color: 'var(--accent)' }}>
               Startup Operating System
             </span>
-            <Zap className="w-3 h-3 text-indigo-400" />
+            <Zap className="w-3 h-3 text-accent" />
           </div>
         </motion.div>
 
         {/* Tagline */}
-        <motion.p
-          variants={fadeUp}
-          className="text-sm text-slate-500 max-w-xs leading-relaxed font-medium"
+        <motion.p variants={fadeUp}
+          className="text-sm max-w-xs leading-relaxed font-medium"
+          style={{ color: 'var(--text-secondary)' }}
         >
           Your complete command center for building, validating, and scaling your startup.
         </motion.p>
 
-        {/* Loading indicator */}
-        <motion.div variants={fadeUp} className="flex flex-col items-center space-y-3">
-          <div className="flex items-center space-x-1.5">
-            {[0, 1, 2, 3, 4].map(i => (
+        {/* Loading dots */}
+        <motion.div variants={fadeUp} className="flex flex-col items-center gap-3">
+          <div className="flex gap-1.5">
+            {[0, 1, 2].map(i => (
               <motion.div
                 key={i}
-                className="w-1 h-1 rounded-full bg-indigo-400"
-                animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.5, 1] }}
-                transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.15 }}
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: 'var(--accent)' }}
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15, ease: 'easeInOut' }}
               />
             ))}
           </div>
-          <span className="text-[10px] text-slate-400 font-mono font-bold tracking-widest uppercase">
+          <span className="text-[10px] font-bold tracking-widest uppercase"
+            style={{ color: 'var(--text-muted)', fontFamily: SG }}>
             Initialising Workspace
           </span>
         </motion.div>
@@ -161,27 +123,27 @@ export const Splash: React.FC = () => {
         {/* Feature pills */}
         <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-2">
           {['AI Mentors', 'Journey Map', 'Smart Docs', 'Analytics'].map(tag => (
-            <span
-              key={tag}
-              className="px-3 py-1 rounded-full text-[10px] font-bold bg-white/70 backdrop-blur-sm border border-indigo-100 text-indigo-600 shadow-card-sm"
+            <span key={tag}
+              className="px-3 py-1.5 rounded-xl text-[10px] font-bold glass-frost"
+              style={{ color: 'var(--accent)' }}
             >
               {tag}
             </span>
           ))}
         </motion.div>
-
       </motion.div>
 
-      {/* Bottom CTA hint */}
+      {/* Bottom hint */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.8, duration: 0.6 }}
-        className="absolute bottom-10 left-0 right-0 flex justify-center"
+        transition={{ delay: 1.8, duration: 0.5 }}
+        className="absolute bottom-8 left-0 right-0 flex justify-center"
       >
-        <div className="flex items-center space-x-2 text-[10px] text-slate-400 font-semibold">
+        <div className="flex items-center gap-2 text-[10px] font-semibold"
+          style={{ color: 'var(--text-muted)' }}>
           <span>Launching your workspace</span>
-          <ArrowRight className="w-3 h-3 animate-pulse" />
+          <ArrowRight className="w-3 h-3 gentle-bounce" />
         </div>
       </motion.div>
     </div>

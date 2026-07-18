@@ -72,7 +72,7 @@ export const JourneyHome: React.FC = () => {
           boxShadow: '0 20px 60px rgba(245,158,11,0.4), 0 8px 20px rgba(234,88,12,0.25)',
         }}
       >
-        <ParticleField density={30} speed={0.25} />
+        <ParticleField count={18} />
 
         {/* Scan line */}
         <motion.div

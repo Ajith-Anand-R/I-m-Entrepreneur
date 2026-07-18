@@ -135,10 +135,8 @@ const Nav: React.FC<{ user: any }> = ({ user }) => {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center relative overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #6C47FF, #F40076)' }}>
-            <span className="text-white font-bold text-sm font-heading">IE</span>
-            <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="w-8 h-8 rounded-lg overflow-hidden border border-white/10 bg-black flex items-center justify-center shrink-0">
+            <img src="/beyond_guidance_logo.jpg" alt="Beyond Guidance" className="w-full h-full object-contain scale-[1.3] -translate-y-[2px]" />
           </div>
           <span className="text-white font-heading font-semibold text-lg tracking-tight">
             I'm <span style={{ background: 'linear-gradient(90deg,#6C47FF,#F40076)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Entrepreneur</span>
@@ -1258,9 +1256,8 @@ const Footer: React.FC = () => (
         {/* Brand */}
         <div className="col-span-2 md:col-span-1">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #6C47FF, #F40076)' }}>
-              <span className="text-white font-bold text-sm">IE</span>
+            <div className="w-8 h-8 rounded-lg overflow-hidden border border-white/10 bg-black flex items-center justify-center shrink-0">
+              <img src="/beyond_guidance_logo.jpg" alt="Beyond Guidance" className="w-full h-full object-contain scale-[1.3] -translate-y-[2px]" />
             </div>
             <span className="text-white font-heading font-semibold">I'm Entrepreneur</span>
           </div>
